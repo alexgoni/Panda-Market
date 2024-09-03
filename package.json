@@ -2,24 +2,11 @@
   "name": "panda-market",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@tanstack/react-query": "^5.53.2",
-    "@tanstack/react-query-devtools": "^5.53.2",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^13.0.0",
-    "@testing-library/user-event": "^13.2.1",
-    "classnames": "^2.5.1",
-    "msw": "2.0.3",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.1",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.0"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:coverage": "react-scripts test --coverage",
     "prettier": "prettier --write src/**/*.{js,jsx,ts,tsx}",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx}"
   },
@@ -34,6 +21,19 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.53.2",
+    "@tanstack/react-query-devtools": "^5.53.2",
+    "@testing-library/jest-dom": "6.1.5",
+    "@testing-library/react": "15.0.6",
+    "classnames": "^2.5.1",
+    "msw": "2.0.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.1",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.0"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
