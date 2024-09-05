@@ -1,0 +1,82 @@
+/* input */
+
+.input {
+  width: 100%;
+  line-height: 26px;
+  background-color: var(--gray-100);
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 16px;
+
+  &::placeholder {
+    color: var(--gray-400);
+  }
+
+  &:focus {
+    outline: 1px solid var(--blue);
+  }
+
+  &.error {
+    outline: 1px solid var(--red);
+  }
+
+  &.password {
+    padding-right: 50px;
+  }
+}
+
+/* password input */
+
+.passwordWrapper {
+  position: relative;
+  height: min-content;
+
+  img {
+    position: absolute;
+    right: 20px;
+    top: calc(50% + 2px);
+    transform: translateY(-50%);
+  }
+}
+
+.errorMsg {
+  display: block;
+  color: var(--red);
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 12px;
+  margin-top: 8px;
+}
+
+/* search input */
+
+.searchInputWrapper {
+  position: relative;
+
+  .searchInput {
+    width: 100%;
+    padding: 9px 20px 9px 44px;
+    border-radius: 8px;
+    background-color: var(--gray-100);
+    border: none;
+    outline: none;
+    font-size: 16px;
+
+    &::placeholder {
+      color: var(--gray-400);
+    }
+
+    &:focus {
+      outline: 1px solid var(--blue);
+    }
+  }
+
+  img {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
