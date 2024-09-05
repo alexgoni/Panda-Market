@@ -3,7 +3,7 @@ import Pagination from "components/Pagination";
 import { useEffect, useState } from "react";
 
 export default function Test() {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(2);
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
@@ -17,8 +17,8 @@ export default function Test() {
     <>
       <Button>판다마켓</Button>
       <Pagination
-        currentPage={page}
         totalPages={7}
+        currentPage={page}
         onPageChange={handlePageChange}
       />
     </>

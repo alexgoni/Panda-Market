@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import {
   createContext,
   useCallback,
@@ -29,26 +30,40 @@ export function usePaginationContext() {
   return context;
 }
 
-interface Props {
+interface UsingInnerPageProps {
   totalPages: number;
-  currentPage?: number;
   onPageChange?: (page: number) => void;
+  currentPage?: never;
 }
 
-export default function Pagination({
-  currentPage,
-  totalPages,
-  onPageChange,
-}: Props) {
+interface UsingSuperiorPageProps {
+  totalPages: number;
+  currentPage: number;
+  onPageChange: (page: number) => void;
+}
+
+type PaginationProps = UsingInnerPageProps | UsingSuperiorPageProps;
+
+function isUsingSuperiorPageProps(
+  props: PaginationProps,
+): props is UsingSuperiorPageProps {
+  return props.currentPage !== undefined;
+}
+
+export default function Pagination(props: PaginationProps) {
+  const { totalPages, onPageChange } = props;
   const [innerCurrentPage, setInnerCurrentPage] = useState(1);
-  const resolvedCurrentPage =
-    currentPage !== undefined ? currentPage : innerCurrentPage;
+
+  const resolvedCurrentPage = isUsingSuperiorPageProps(props)
+    ? props.currentPage
+    : innerCurrentPage;
+
   const resolvedOnPageChange = useCallback(
     (page: number) => {
-      if (currentPage === undefined) setInnerCurrentPage(page);
+      if (!isUsingSuperiorPageProps(props)) setInnerCurrentPage(page);
       onPageChange?.(page);
     },
-    [currentPage, onPageChange],
+    [props],
   );
 
   const contextValue = useMemo(

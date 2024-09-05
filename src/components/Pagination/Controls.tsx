@@ -1,7 +1,7 @@
 import arrowLeft from "assets/icons/ic_arrow_left.svg";
 import arrowRight from "assets/icons/ic_arrow_right.svg";
 import classNames from "classnames/bind";
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 
 // eslint-disable-next-line import/no-cycle
 import { usePaginationContext } from ".";
@@ -9,18 +9,14 @@ import styles from "./Pagination.module.scss";
 
 const PAGE_DISPLAY_COUNT = 5;
 
-export function PrevButton() {
+export const PrevButton = memo(() => {
   const { onPageChange, currentPage } = usePaginationContext();
-
-  const currentGroup = useMemo(
-    () => Math.ceil(currentPage / PAGE_DISPLAY_COUNT),
-    [currentPage],
-  );
   const isDisabled = currentPage <= PAGE_DISPLAY_COUNT;
 
   const handleClick = () => {
     if (isDisabled) return;
 
+    const currentGroup = Math.ceil(currentPage / PAGE_DISPLAY_COUNT);
     const prevFirstPage = (currentGroup - 2) * PAGE_DISPLAY_COUNT + 1;
     onPageChange(prevFirstPage);
   };
@@ -35,11 +31,10 @@ export function PrevButton() {
       <img src={arrowLeft} alt="prev" />
     </button>
   );
-}
+});
 
 export function NextButton() {
   const { onPageChange, currentPage, totalPages } = usePaginationContext();
-
   const lastGroup = useMemo(
     () => Math.ceil(totalPages / PAGE_DISPLAY_COUNT),
     [totalPages],
