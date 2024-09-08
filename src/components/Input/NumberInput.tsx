@@ -7,7 +7,7 @@ import { NumberInputProps } from "./type";
 type Props = Omit<NumberInputProps, "type">;
 
 export default function NumberInput(props: Props) {
-  const { required, name, onChange, value } = props;
+  const { required, name, onChange, value, ...rest } = props;
   const { handleValidationState } = useFormContext();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -28,9 +28,11 @@ export default function NumberInput(props: Props) {
 
   return (
     <input
-      {...props}
+      {...rest}
       type="text"
       className={styles.input}
+      required={required}
+      name={name}
       value={value === 0 ? "" : value.toLocaleString()}
       onChange={handleChange}
     />

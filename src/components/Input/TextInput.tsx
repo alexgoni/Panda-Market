@@ -7,7 +7,7 @@ import { TextInputProps } from "./type";
 type Props = Omit<TextInputProps, "type">;
 
 export default function TextInput(props: Props) {
-  const { required, name, onChange } = props;
+  const { required, name, onChange, ...rest } = props;
   const { handleValidationState } = useFormContext();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -23,9 +23,11 @@ export default function TextInput(props: Props) {
 
   return (
     <input
-      {...props}
+      {...rest}
       type="text"
       className={styles.input}
+      name={name}
+      required={required}
       onChange={handleChange}
     />
   );

@@ -13,7 +13,7 @@ const MIN_PASSWORD_LENGTH = 8;
 type Props = Omit<PasswordInputProps, "type">;
 
 export default function PasswordInput(props: Props) {
-  const { name, onChange } = props;
+  const { name, onChange, ...rest } = props;
   const [passwordOpen, setPasswordOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { handleValidationState } = useFormContext();
@@ -47,9 +47,10 @@ export default function PasswordInput(props: Props) {
     <>
       <div className={cx("password-wrapper")}>
         <input
-          {...props}
+          {...rest}
           type={passwordOpen ? "text" : "password"}
           className={inputClassnames}
+          name={name}
           onChange={handleChange}
         />
         <button

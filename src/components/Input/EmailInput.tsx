@@ -15,7 +15,7 @@ const cx = classNames.bind(styles);
 type Props = Omit<EmailInputProps, "type">;
 
 export default function EmailInput(props: Props) {
-  const { onChange, name } = props;
+  const { onChange, name, ...rest } = props;
   const [error, setError] = useState<string | null>(null);
   const { handleValidationState } = useFormContext();
 
@@ -43,9 +43,10 @@ export default function EmailInput(props: Props) {
   return (
     <>
       <input
-        {...props}
+        {...rest}
         type="email"
         className={inputClassnames}
+        name={name}
         onChange={handleChange}
       />
       {error && <span className={cx("error-msg")}>{error}</span>}

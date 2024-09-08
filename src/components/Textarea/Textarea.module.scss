@@ -1,0 +1,30 @@
+.textarea {
+  padding: 12px 20px;
+  border: none;
+  outline: none;
+  width: 100%;
+  background-color: var(--gray-100);
+  resize: none;
+  border-radius: 8px;
+  height: 200px;
+
+  @media (min-width: 768px) {
+    height: 282px;
+  }
+
+  &::placeholder {
+    color: var(--gray-400);
+  }
+
+  &:focus {
+    outline: 1px solid var(--blue);
+  }
+
+  &.sm {
+    height: 129px;
+
+    @media (min-width: 768px) {
+      height: 104px;
+    }
+  }
+}

@@ -25,30 +25,31 @@ export default function Input(props: Props) {
   const { onChange, type } = props;
 
   if (type === "text") {
-    const { value } = props as TextInputProps;
-    return <TextInput {...props} value={value} onChange={onChange} />;
+    const { value, ...rest } = props as TextInputProps;
+    return <TextInput {...rest} value={value} onChange={onChange} />;
   }
 
   if (type === "number") {
-    const { value } = props as NumberInputProps;
-    return <NumberInput {...props} value={value} onChange={onChange} />;
+    const { value, ...rest } = props as NumberInputProps;
+    return <NumberInput {...rest} value={value} onChange={onChange} />;
   }
 
   if (type === "email") {
-    const { value } = props as EmailInputProps;
-    return <EmailInput {...props} value={value} onChange={onChange} />;
+    const { value, ...rest } = props as EmailInputProps;
+    return <EmailInput {...rest} value={value} onChange={onChange} />;
   }
 
   if (type === "password") {
-    const { value } = props as PasswordInputProps;
-    return <PasswordInput {...props} value={value} onChange={onChange} />;
+    const { value, ...rest } = props as PasswordInputProps;
+    return <PasswordInput {...rest} value={value} onChange={onChange} />;
   }
 
   if (type === "password-confirmation") {
-    const { value, password } = props as PasswordConfirmationInputProps;
+    const { value, password, ...rest } =
+      props as PasswordConfirmationInputProps;
     return (
       <PasswordConfirmationInput
-        {...props}
+        {...rest}
         value={value}
         onChange={onChange}
         password={password}
@@ -57,10 +58,10 @@ export default function Input(props: Props) {
   }
 
   if (type === "search") {
-    const { value, maxWidth } = props as SearchInputProps;
+    const { value, maxWidth, ...rest } = props as SearchInputProps;
     return (
       <SearchInput
-        {...props}
+        {...rest}
         value={value}
         onChange={onChange}
         maxWidth={maxWidth}

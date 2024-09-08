@@ -2,6 +2,7 @@ import Button from "components/Button";
 import Form from "components/Form";
 import Input from "components/Input";
 import Pagination from "components/Pagination";
+import Textarea from "components/Textarea";
 import { ChangeEvent, useEffect, useState } from "react";
 
 export default function Test() {
@@ -12,6 +13,7 @@ export default function Test() {
     email: "",
     password: "",
     passwordConfirmation: "",
+    textarea: "",
   });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -23,9 +25,14 @@ export default function Test() {
     }));
   };
 
-  // useEffect(() => {
-  //   console.log(formValue);
-  // }, [formValue]);
+  const handleTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+
+    setFormValue((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
@@ -43,8 +50,6 @@ export default function Test() {
         currentPage={page}
         onPageChange={handlePageChange}
       />
-      {/* <Input type="text" value="123" onChange={handleChange} />
-      <Input type="number" value={value} onChange={handleChange} /> */}
       <Form>
         <Input
           type="text"
@@ -85,6 +90,14 @@ export default function Test() {
           placeholder="비밀번호를 확인합시다"
         />
         <Button type="submit">asdf</Button>
+        <Textarea
+          placeholder="asdf"
+          name="textarea"
+          size="sm"
+          value={formValue.textarea}
+          onChange={handleTextareaChange}
+          required
+        />
       </Form>
 
       {/* <Input

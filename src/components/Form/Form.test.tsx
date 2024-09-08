@@ -26,6 +26,7 @@ describe("Form Component", () => {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+      // eslint-disable-next-line no-console
       console.log(formValue);
     };
 
