@@ -17,20 +17,20 @@ type Props = Omit<EmailInputProps, "type">;
 export default function EmailInput(props: Props) {
   const { onChange, name } = props;
   const [error, setError] = useState<string | null>(null);
-  const { setValidationState } = useFormContext();
+  const { handleValidationState } = useFormContext();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
 
     if (newValue.trim() === "") {
       setError(null);
-      setValidationState({ [name]: false });
+      handleValidationState({ [name]: false });
     } else if (!validateEmail(newValue)) {
       setError("유효하지 않은 이메일 형식입니다.");
-      setValidationState({ [name]: false });
+      handleValidationState({ [name]: false });
     } else {
       setError(null);
-      setValidationState({ [name]: true });
+      handleValidationState({ [name]: true });
     }
 
     onChange(e);

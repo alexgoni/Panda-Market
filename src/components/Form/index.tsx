@@ -15,7 +15,9 @@ import {
 
 interface FormContextType {
   validationState: Record<string, boolean>;
-  setValidationState: (updatedValidationState: Record<string, boolean>) => void;
+  handleValidationState: (
+    updatedValidationState: Record<string, boolean>,
+  ) => void;
 }
 
 const FormContext = createContext<FormContextType | null>(null);
@@ -39,7 +41,7 @@ export default function Form(
     [children],
   );
 
-  const [validationState, setValidationStateInternal] = useState<
+  const [validationState, setValidationState] = useState<
     Record<string, boolean>
   >(() => {
     const inputElements = childrenElements.filter(
@@ -56,10 +58,10 @@ export default function Form(
     return initialValidationState;
   });
 
-  const setValidationState = (
+  const handleValidationState = (
     updatedValidationState: Record<string, boolean>,
   ) => {
-    setValidationStateInternal((prev) => ({
+    setValidationState((prev) => ({
       ...prev,
       ...updatedValidationState,
     }));
@@ -81,7 +83,7 @@ export default function Form(
   });
 
   const contextValue = useMemo(
-    () => ({ validationState, setValidationState }),
+    () => ({ validationState, handleValidationState }),
     [validationState],
   );
 

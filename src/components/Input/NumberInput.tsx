@@ -8,7 +8,7 @@ type Props = Omit<NumberInputProps, "type">;
 
 export default function NumberInput(props: Props) {
   const { required, name, onChange, value } = props;
-  const { setValidationState } = useFormContext();
+  const { handleValidationState } = useFormContext();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(e.target.value.replace(/,/g, ""));
@@ -22,8 +22,8 @@ export default function NumberInput(props: Props) {
   useEffect(() => {
     if (!required) return;
 
-    if (value > 0) setValidationState({ [name]: true });
-    else setValidationState({ [name]: false });
+    if (value > 0) handleValidationState({ [name]: true });
+    else handleValidationState({ [name]: false });
   }, [value, required]);
 
   return (

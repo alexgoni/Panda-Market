@@ -16,7 +16,7 @@ export default function PasswordInput(props: Props) {
   const { name, onChange } = props;
   const [passwordOpen, setPasswordOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { setValidationState } = useFormContext();
+  const { handleValidationState } = useFormContext();
 
   const togglePassword = () => {
     setPasswordOpen((prev) => !prev);
@@ -27,13 +27,13 @@ export default function PasswordInput(props: Props) {
 
     if (newValue.trim() === "") {
       setError(null);
-      setValidationState({ [name]: false });
+      handleValidationState({ [name]: false });
     } else if (newValue.length < MIN_PASSWORD_LENGTH) {
       setError("비밀번호를 8자 이상 입력해주세요.");
-      setValidationState({ [name]: false });
+      handleValidationState({ [name]: false });
     } else {
       setError(null);
-      setValidationState({ [name]: true });
+      handleValidationState({ [name]: true });
     }
 
     onChange(e);

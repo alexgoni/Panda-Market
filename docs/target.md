@@ -7,3 +7,5 @@
 5. zod 사용해보기
 6. fetch 확장
 7. startTransition
+8. abortController
+9. Link prefetch 컴포넌트
