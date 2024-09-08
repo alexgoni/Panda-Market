@@ -91,9 +91,9 @@ video {
   margin: 0;
   padding: 0;
   border: 0;
+  vertical-align: baseline;
   font-size: 100%;
   font: inherit;
-  vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
 article,
@@ -133,18 +133,18 @@ table {
 }
 
 a {
-  text-decoration: none;
   color: white;
+  text-decoration: none;
 }
 
 button {
-  background: inherit;
+  padding: 0;
   border: none;
   box-shadow: none;
-  border-radius: 0;
-  padding: 0;
   overflow: visible;
+  background: inherit;
   cursor: pointer;
+  border-radius: 0;
 }
 
 select {
@@ -155,4 +155,11 @@ select {
 
 select::-ms-expand {
   display: none;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
 }

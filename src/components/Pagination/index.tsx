@@ -1,6 +1,7 @@
 /* eslint-disable react/destructuring-assignment */
 import {
   createContext,
+  memo,
   useCallback,
   useContext,
   useEffect,
@@ -50,7 +51,7 @@ function isUsingSuperiorPageProps(
   return props.currentPage !== undefined;
 }
 
-export default function Pagination(props: PaginationProps) {
+function Pagination(props: PaginationProps) {
   const { totalPages, onPageChange } = props;
   const [innerCurrentPage, setInnerCurrentPage] = useState(1);
 
@@ -90,3 +91,5 @@ export default function Pagination(props: PaginationProps) {
     </PaginationContext.Provider>
   );
 }
+
+export default memo(Pagination);

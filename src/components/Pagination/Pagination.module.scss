@@ -1,16 +1,16 @@
 /* controls */
 
 .control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--gray-200);
   min-width: 40px;
   height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: white;
-  border-radius: 50%;
-  border: 1px solid var(--gray-200);
-  color: var(--gray-500);
   font-weight: 600;
+  color: var(--gray-500);
+  border-radius: 50%;
   user-select: none;
 
   &:hover {
@@ -18,8 +18,8 @@
   }
 
   &:disabled {
-    cursor: not-allowed;
     background-color: var(--gray-200);
+    cursor: not-allowed;
   }
 
   &.active {

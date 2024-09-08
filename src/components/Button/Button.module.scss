@@ -1,11 +1,11 @@
 @use "sass-rem" as rem;
 
 .button {
-  background-color: var(--blue);
-  color: white;
   padding: rem.convert(8px 23px);
-  border-radius: rem.convert(8px);
+  background-color: var(--blue);
   font-size: rem.convert(16px);
+  color: white;
+  border-radius: rem.convert(8px);
 
   &:hover {
     background-color: var(--blue-200);

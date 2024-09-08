@@ -1,14 +1,13 @@
 /* input */
 
 .input {
-  width: 100%;
-  line-height: 26px;
-  background-color: var(--gray-100);
+  padding: 12px 20px;
   border: none;
   outline: none;
+  width: 100%;
+  background-color: var(--gray-100);
+  line-height: 26px;
   border-radius: 8px;
-  padding: 12px 20px;
-  font-size: 16px;
 
   &::placeholder {
     color: var(--gray-400);
@@ -33,21 +32,22 @@
   position: relative;
   height: min-content;
 
-  img {
+  .eyeIcon {
+    padding: 10px;
     position: absolute;
-    right: 20px;
     top: calc(50% + 2px);
+    right: 0px;
     transform: translateY(-50%);
   }
 }
 
 .errorMsg {
   display: block;
-  color: var(--red);
+  margin-top: 8px;
+  margin-left: 12px;
   font-size: 14px;
   font-weight: 600;
-  margin-left: 12px;
-  margin-top: 8px;
+  color: var(--red);
 }
 
 /* search input */
@@ -56,13 +56,13 @@
   position: relative;
 
   .searchInput {
-    width: 100%;
     padding: 9px 20px 9px 44px;
-    border-radius: 8px;
-    background-color: var(--gray-100);
     border: none;
     outline: none;
+    width: 100%;
+    background-color: var(--gray-100);
     font-size: 16px;
+    border-radius: 8px;
 
     &::placeholder {
       color: var(--gray-400);
@@ -75,8 +75,8 @@
 
   img {
     position: absolute;
-    left: 16px;
     top: 50%;
+    left: 16px;
     transform: translateY(-50%);
   }
 }

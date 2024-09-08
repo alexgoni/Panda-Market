@@ -5,15 +5,15 @@ import { useFormContext } from "components/Form";
 import { ChangeEvent, useState } from "react";
 
 import styles from "./Input.module.scss";
-import { PasswordInputProps } from "./type";
+import { PasswordConfirmationInputProps } from "./type";
 
 const cn = classNames.bind(styles);
 const MIN_PASSWORD_LENGTH = 8;
 
-type Props = Omit<PasswordInputProps, "type">;
+type Props = Omit<PasswordConfirmationInputProps, "type">;
 
-export default function PasswordInput(props: Props) {
-  const { name, onChange } = props;
+export default function PasswordConfirmationInput(props: Props) {
+  const { name, onChange, password } = props;
   const [passwordOpen, setPasswordOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { setValidationState } = useFormContext();
@@ -31,6 +31,9 @@ export default function PasswordInput(props: Props) {
     } else if (newValue.length < MIN_PASSWORD_LENGTH) {
       setError("비밀번호를 8자 이상 입력해주세요.");
       setValidationState({ [name]: false });
+    } else if (newValue !== password) {
+      setError("비밀번호가 일치하지 않습니다.");
+      setValidationState({ [name]: false });
     } else {
       setError(null);
       setValidationState({ [name]: true });
@@ -38,7 +41,6 @@ export default function PasswordInput(props: Props) {
 
     onChange(e);
   };
-
   const inputClassnames = cn("input", "password", {
     [styles.error]: !!error,
   });
