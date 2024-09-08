@@ -8,7 +8,6 @@ import {
   cloneElement,
   createContext,
   useContext,
-  useEffect,
   useMemo,
   useState,
 } from "react";

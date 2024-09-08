@@ -9,11 +9,11 @@ const cx = classNames.bind(styles);
 type Props = Omit<SearchInputProps, "type">;
 
 export default function SearchInput(props: Props) {
-  const { maxWidth, ...args } = props;
+  const { maxWidth, ...rest } = props;
 
   return (
     <div className={cx("search-input-wrapper")} style={{ maxWidth }}>
-      <input {...args} type="text" />
+      <input {...rest} type="text" />
       <img src={searchIcon} alt="search" />
     </div>
   );
