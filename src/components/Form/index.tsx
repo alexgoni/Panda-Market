@@ -80,13 +80,13 @@ export default function Form(
     return child;
   });
 
-  useEffect(() => {
-    console.log(validationState);
-  }, [validationState]);
+  const contextValue = useMemo(
+    () => ({ validationState, setValidationState }),
+    [validationState],
+  );
 
   return (
-    // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <FormContext.Provider value={{ validationState, setValidationState }}>
+    <FormContext.Provider value={contextValue}>
       <form {...args}>{updatedChildren}</form>
     </FormContext.Provider>
   );

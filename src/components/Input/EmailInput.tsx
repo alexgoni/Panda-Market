@@ -10,7 +10,7 @@ const validateEmail = (email: string): boolean => {
   return emailRegex.test(email);
 };
 
-const cn = classNames.bind(styles);
+const cx = classNames.bind(styles);
 
 type Props = Omit<EmailInputProps, "type">;
 
@@ -36,8 +36,8 @@ export default function EmailInput(props: Props) {
     onChange(e);
   };
 
-  const inputClassnames = cn("input", {
-    [styles.error]: !!error,
+  const inputClassnames = cx("input", {
+    error,
   });
 
   return (
@@ -48,7 +48,7 @@ export default function EmailInput(props: Props) {
         className={inputClassnames}
         onChange={handleChange}
       />
-      {error && <span className={styles.errorMsg}>{error}</span>}
+      {error && <span className={cx("error-msg")}>{error}</span>}
     </>
   );
 }

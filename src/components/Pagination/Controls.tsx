@@ -89,7 +89,7 @@ export function PageList() {
   );
 }
 
-const cn = classNames.bind(styles);
+const cx = classNames.bind(styles);
 
 function PageButton({ page }: { page: number }) {
   const { currentPage, onPageChange } = usePaginationContext();
@@ -98,7 +98,7 @@ function PageButton({ page }: { page: number }) {
     onPageChange(page);
   };
 
-  const classnames = cn("control", {
+  const classnames = cx("control", {
     active: currentPage === page,
   });
 

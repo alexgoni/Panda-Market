@@ -7,7 +7,7 @@ import { ChangeEvent, useState } from "react";
 import styles from "./Input.module.scss";
 import { PasswordConfirmationInputProps } from "./type";
 
-const cn = classNames.bind(styles);
+const cx = classNames.bind(styles);
 const MIN_PASSWORD_LENGTH = 8;
 
 type Props = Omit<PasswordConfirmationInputProps, "type">;
@@ -41,13 +41,14 @@ export default function PasswordConfirmationInput(props: Props) {
 
     onChange(e);
   };
-  const inputClassnames = cn("input", "password", {
-    [styles.error]: !!error,
+
+  const inputClassnames = cx("input", "password", {
+    error,
   });
 
   return (
     <>
-      <div className={styles.passwordWrapper}>
+      <div className={cx("password-wrapper")}>
         <input
           {...props}
           type={passwordOpen ? "text" : "password"}
@@ -57,7 +58,7 @@ export default function PasswordConfirmationInput(props: Props) {
         <button
           type="button"
           onClick={togglePassword}
-          className={styles.eyeIcon}
+          className={cx("eye-icon")}
         >
           {passwordOpen ? (
             <img src={passwordEyeOpen} alt="pw-open" />
@@ -67,7 +68,7 @@ export default function PasswordConfirmationInput(props: Props) {
         </button>
       </div>
 
-      {error && <span className={styles.errorMsg}>{error}</span>}
+      {error && <span className={cx("error-msg")}>{error}</span>}
     </>
   );
 }

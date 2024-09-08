@@ -1,4 +1,5 @@
 /* eslint-disable react/destructuring-assignment */
+import classNames from "classnames/bind";
 import {
   createContext,
   memo,
@@ -51,6 +52,8 @@ function isUsingSuperiorPageProps(
   return props.currentPage !== undefined;
 }
 
+const cx = classNames.bind(styles);
+
 function Pagination(props: PaginationProps) {
   const { totalPages, onPageChange } = props;
   const [innerCurrentPage, setInnerCurrentPage] = useState(1);
@@ -83,7 +86,7 @@ function Pagination(props: PaginationProps) {
 
   return (
     <PaginationContext.Provider value={contextValue}>
-      <div className={styles.wrapper}>
+      <div className={cx("wrapper")}>
         <PrevButton />
         <PageList />
         <NextButton />

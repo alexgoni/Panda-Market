@@ -10,7 +10,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   height?: string;
 }
 
-const cn = classNames.bind(styles);
+const cx = classNames.bind(styles);
 
 export default function Button({
   type = "button",
@@ -21,7 +21,7 @@ export default function Button({
   height,
   onClick,
 }: Props) {
-  const classnames = cn("button", {
+  const classnames = cx("button", {
     round,
   });
 

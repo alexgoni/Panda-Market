@@ -45,7 +45,6 @@ export interface SearchInputProps
   extends InputHTMLAttributes<HTMLInputElement> {
   type: "search";
   value: string;
-  name: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   maxWidth?: string;
 }

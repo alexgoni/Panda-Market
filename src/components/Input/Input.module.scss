@@ -28,11 +28,11 @@
 
 /* password input */
 
-.passwordWrapper {
+.password-wrapper {
   position: relative;
   height: min-content;
 
-  .eyeIcon {
+  .eye-icon {
     padding: 10px;
     position: absolute;
     top: calc(50% + 2px);
@@ -41,7 +41,7 @@
   }
 }
 
-.errorMsg {
+.error-msg {
   display: block;
   margin-top: 8px;
   margin-left: 12px;
@@ -52,10 +52,10 @@
 
 /* search input */
 
-.searchInputWrapper {
+.search-input-wrapper {
   position: relative;
 
-  .searchInput {
+  input {
     padding: 9px 20px 9px 44px;
     border: none;
     outline: none;
