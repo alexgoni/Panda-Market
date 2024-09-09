@@ -1,90 +1,40 @@
+/* eslint-disable no-console */
 import { fireEvent, render, screen } from "@testing-library/react";
 import Button from "components/Button";
 import Input from "components/Input";
+import Textarea from "components/Textarea";
 import { ChangeEvent, FormEvent, useState } from "react";
 
-import Form from ".";
+import Form, { useFormContext } from ".";
 
 describe("Form Component", () => {
-  function FormComponent() {
-    const [formValue, setFormValue] = useState({
-      nickname: "",
-      age: 0,
-      email: "",
-      password: "",
-      passwordConfirmation: "",
-    });
+  it("useFormContext 호출 범위 테스트", () => {
+    const originalError = console.error;
+    console.error = jest.fn();
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
+    function TestComponent() {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const context = useFormContext();
+      // eslint-disable-next-line react/jsx-no-useless-fragment
+      return <></>;
+    }
 
-      setFormValue((prev) => ({
-        ...prev,
-        [name]: name === "age" ? Number(value) : value,
-      }));
-    };
-
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      // eslint-disable-next-line no-console
-      console.log(formValue);
-    };
-
-    return (
-      <Form onSubmit={handleSubmit}>
-        <Input
-          type="text"
-          name="nickname"
-          value={formValue.nickname}
-          onChange={handleChange}
-          placeholder="이름"
-          required
-        />
-        <Input
-          type="number"
-          name="age"
-          value={formValue.age}
-          onChange={handleChange}
-          placeholder="나이"
-          required
-        />
-        <Input
-          type="email"
-          name="email"
-          value={formValue.email}
-          onChange={handleChange}
-          placeholder="이메일을 입력하세요"
-          required
-        />
-        <Input
-          type="password"
-          name="password"
-          value={formValue.password}
-          onChange={handleChange}
-          placeholder="비밀번호를 입력하세요"
-          required
-        />
-        <Input
-          type="password-confirmation"
-          name="passwordConfirmation"
-          value={formValue.passwordConfirmation}
-          onChange={handleChange}
-          password={formValue.password}
-          placeholder="비밀번호를 입력하세요"
-          required
-        />
-        <Button type="submit">제출</Button>
-      </Form>
+    expect(() => render(<TestComponent />)).toThrow(
+      "Form 컨텍스트를 호출할 수 없는 범위입니다.",
     );
-  }
+
+    console.error = originalError;
+  });
 
   let consoleSpy: jest.SpyInstance;
-  let buttonElement: HTMLElement;
+
   let nameInputElement: HTMLElement;
   let ageInputElement: HTMLElement;
   let emailInputElement: HTMLElement;
   let passwordInputElement: HTMLElement;
   let passwordConfirmationElement: HTMLElement;
+  let descriptionElement: HTMLElement;
+  let buttonElement: HTMLElement;
 
   beforeEach(() => {
     consoleSpy = jest.spyOn(console, "log").mockImplementation();
@@ -95,6 +45,7 @@ describe("Form Component", () => {
     emailInputElement = screen.getByPlaceholderText("이메일을 입력하세요");
     [passwordInputElement, passwordConfirmationElement] =
       screen.getAllByPlaceholderText("비밀번호를 입력하세요");
+    descriptionElement = screen.getByPlaceholderText("설명");
     buttonElement = screen.getByText("제출");
 
     fireEvent.change(nameInputElement, { target: { value: "John" } });
@@ -107,6 +58,9 @@ describe("Form Component", () => {
     });
     fireEvent.change(passwordConfirmationElement, {
       target: { value: "password123" },
+    });
+    fireEvent.change(descriptionElement, {
+      target: { value: "설명입니다." },
     });
   });
 
@@ -124,6 +78,7 @@ describe("Form Component", () => {
       email: "john@example.com",
       password: "password123",
       passwordConfirmation: "password123",
+      description: "설명입니다.",
     });
   });
 
@@ -165,5 +120,101 @@ describe("Form Component", () => {
       });
       expect(buttonElement).toBeDisabled();
     });
+
+    it("description", () => {
+      fireEvent.change(descriptionElement, {
+        target: { value: "" },
+      });
+      expect(buttonElement).toBeDisabled();
+    });
   });
 });
+
+function FormComponent() {
+  const [formValue, setFormValue] = useState({
+    nickname: "",
+    age: 0,
+    email: "",
+    password: "",
+    passwordConfirmation: "",
+    description: "",
+  });
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setFormValue((prev) => ({
+      ...prev,
+      [name]: name === "age" ? Number(value) : value,
+    }));
+  };
+
+  const handleTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+
+    setFormValue((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // eslint-disable-next-line no-console
+    console.log(formValue);
+  };
+
+  return (
+    <Form onSubmit={handleSubmit}>
+      <Input
+        type="text"
+        name="nickname"
+        value={formValue.nickname}
+        onChange={handleInputChange}
+        placeholder="이름"
+        required
+      />
+      <Input
+        type="number"
+        name="age"
+        value={formValue.age}
+        onChange={handleInputChange}
+        placeholder="나이"
+        required
+      />
+      <Input
+        type="email"
+        name="email"
+        value={formValue.email}
+        onChange={handleInputChange}
+        placeholder="이메일을 입력하세요"
+        required
+      />
+      <Input
+        type="password"
+        name="password"
+        value={formValue.password}
+        onChange={handleInputChange}
+        placeholder="비밀번호를 입력하세요"
+        required
+      />
+      <Input
+        type="password-confirmation"
+        name="passwordConfirmation"
+        value={formValue.passwordConfirmation}
+        onChange={handleInputChange}
+        password={formValue.password}
+        placeholder="비밀번호를 입력하세요"
+        required
+      />
+      <Textarea
+        placeholder="설명"
+        name="description"
+        value={formValue.description}
+        onChange={handleTextareaChange}
+        required
+      />
+      <Button type="submit">제출</Button>
+    </Form>
+  );
+}

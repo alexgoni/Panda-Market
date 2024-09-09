@@ -1,5 +1,6 @@
 import Button from "components/Button";
 import Input from "components/Input";
+import Textarea from "components/Textarea";
 import {
   Children,
   FormHTMLAttributes,
@@ -46,10 +47,17 @@ export default function Form(
     const inputElements = childrenElements.filter(
       (child) => child.type === Input,
     );
+    const textareaElements = childrenElements.filter(
+      (child) => child.type === Textarea,
+    );
 
     const initialValidationState: Record<string, boolean> = {};
 
     inputElements.forEach((element) => {
+      const { name } = element.props;
+      if (name) initialValidationState[name] = false;
+    });
+    textareaElements.forEach((element) => {
       const { name } = element.props;
       if (name) initialValidationState[name] = false;
     });

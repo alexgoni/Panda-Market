@@ -37,4 +37,30 @@ describe("Button Component", () => {
 
     expect(buttonElement).toHaveStyle({ width: "100%" });
   });
+
+  it("disabled 상태일 때 클릭 테스트", () => {
+    const handleClick = jest.fn();
+    render(
+      <Button onClick={handleClick} disabled>
+        Click me
+      </Button>,
+    );
+
+    const buttonElement = screen.getByText("Click me");
+    fireEvent.click(buttonElement);
+
+    expect(handleClick).not.toHaveBeenCalled();
+    expect(buttonElement).toBeDisabled();
+  });
+
+  it("width, height 테스트", () => {
+    render(
+      <Button width="100px" height="50px">
+        Styled Button
+      </Button>,
+    );
+
+    const buttonElement = screen.getByText("Styled Button");
+    expect(buttonElement).toHaveStyle({ width: "100px", height: "50px" });
+  });
 });
