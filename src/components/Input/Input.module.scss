@@ -80,3 +80,32 @@
     transform: translateY(-50%);
   }
 }
+
+/* tag list */
+
+.tag-list {
+  display: flex;
+  margin-top: 14px;
+  gap: 12px;
+  flex-wrap: wrap;
+
+  .tag {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 6px 12px 6px 16px;
+    background-color: var(--gray-100);
+    border-radius: 26px;
+
+    .delete-icon {
+      height: 22px;
+      svg {
+        fill: var(--gray-400);
+      }
+
+      &:hover svg {
+        fill: var(--red);
+      }
+    }
+  }
+}

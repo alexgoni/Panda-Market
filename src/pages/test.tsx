@@ -4,7 +4,7 @@ import ImageUploader from "components/ImageUploader";
 import Input from "components/Input";
 import Pagination from "components/Pagination";
 import Textarea from "components/Textarea";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
 
 interface FormValue {
   nickname: string;
@@ -14,6 +14,7 @@ interface FormValue {
   passwordConfirmation: string;
   textarea: string;
   imageUploader: File | null;
+  tagList: string[];
 }
 
 export default function Test() {
@@ -26,6 +27,7 @@ export default function Test() {
     passwordConfirmation: "",
     textarea: "",
     imageUploader: null,
+    tagList: [],
   });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -46,12 +48,30 @@ export default function Test() {
     }));
   };
 
-  const handleImageChange = (e: File | null) => {
+  const handleImageChange = (file: File | null) => {
     const name = "imageUploader";
 
     setFormValue((prev) => ({
       ...prev,
-      [name]: e,
+      [name]: file,
+    }));
+  };
+
+  const handleTagKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
+    const name = "tagList";
+
+    setFormValue((prev) => ({
+      ...prev,
+      [name]: [...prev.tagList, e.currentTarget.value],
+    }));
+  };
+
+  const handleTagDelete = (target: string) => {
+    const name = "tagList";
+
+    setFormValue((prev) => ({
+      ...prev,
+      [name]: prev[name].filter((tag: string) => tag !== target),
     }));
   };
 
@@ -72,6 +92,15 @@ export default function Test() {
         onPageChange={handlePageChange}
       />
       <Form>
+        <Input
+          type="tag"
+          value={formValue.tagList}
+          name="tagList"
+          required={false}
+          onKeyUp={handleTagKeyUp}
+          onDelete={handleTagDelete}
+          placeholder="태그를 입력하세요"
+        />
         <Input
           type="text"
           name="nickname"
@@ -94,7 +123,7 @@ export default function Test() {
           value={formValue.email}
           onChange={handleChange}
           placeholder="이메일을 입력하세요"
-          required={false}
+          required
         />
         <Input
           type="password"
@@ -102,7 +131,7 @@ export default function Test() {
           value={formValue.password}
           onChange={handleChange}
           placeholder="비밀번호를 입력하세요"
-          required={false}
+          required
         />
         <Input
           type="password-confirmation"
@@ -111,7 +140,7 @@ export default function Test() {
           onChange={handleChange}
           password={formValue.password}
           placeholder="비밀번호를 확인합시다"
-          required={false}
+          required
         />
         <Button type="submit">asdf</Button>
         <Textarea

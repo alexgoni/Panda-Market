@@ -1,4 +1,4 @@
-import { ChangeEvent, InputHTMLAttributes } from "react";
+import { ChangeEvent, InputHTMLAttributes, KeyboardEvent } from "react";
 
 export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   type: "text";
@@ -42,6 +42,15 @@ export interface PasswordConfirmationInputProps
   password: string;
   required: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+}
+
+export interface TagInputProps extends InputHTMLAttributes<HTMLInputElement> {
+  type: "tag";
+  value: string[];
+  name: string;
+  required: boolean;
+  onKeyUp: (e: KeyboardEvent<HTMLInputElement>) => void;
+  onDelete: (target: string) => void;
 }
 
 export interface SearchInputProps

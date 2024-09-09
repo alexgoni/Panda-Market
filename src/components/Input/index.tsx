@@ -1,15 +1,18 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import EmailInput from "./EmailInput";
 import NumberInput from "./NumberInput";
 import PasswordConfirmationInput from "./PasswordConfirmationInput";
 import PasswordInput from "./PasswordInput";
 import SearchInput from "./SearchInput";
+import TagInput from "./TagInput";
 import TextInput from "./TextInput";
-import {
+import type {
   EmailInputProps,
   NumberInputProps,
   PasswordConfirmationInputProps,
   PasswordInputProps,
   SearchInputProps,
+  TagInputProps,
   TextInputProps,
 } from "./type";
 
@@ -19,54 +22,45 @@ type Props =
   | EmailInputProps
   | PasswordInputProps
   | PasswordConfirmationInputProps
+  | TagInputProps
   | SearchInputProps;
 
 export default function Input(props: Props) {
-  const { onChange, type } = props;
+  const { type } = props;
 
   if (type === "text") {
-    const { value, ...rest } = props as TextInputProps;
-    return <TextInput {...rest} value={value} onChange={onChange} />;
+    const { type, ...rest } = props as TextInputProps;
+    return <TextInput {...rest} />;
   }
 
   if (type === "number") {
-    const { value, ...rest } = props as NumberInputProps;
-    return <NumberInput {...rest} value={value} onChange={onChange} />;
+    const { type, ...rest } = props as NumberInputProps;
+    return <NumberInput {...rest} />;
   }
 
   if (type === "email") {
-    const { value, ...rest } = props as EmailInputProps;
-    return <EmailInput {...rest} value={value} onChange={onChange} />;
+    const { type, ...rest } = props as EmailInputProps;
+    return <EmailInput {...rest} />;
   }
 
   if (type === "password") {
-    const { value, ...rest } = props as PasswordInputProps;
-    return <PasswordInput {...rest} value={value} onChange={onChange} />;
+    const { type, ...rest } = props as PasswordInputProps;
+    return <PasswordInput {...rest} />;
   }
 
   if (type === "password-confirmation") {
-    const { value, password, ...rest } =
-      props as PasswordConfirmationInputProps;
-    return (
-      <PasswordConfirmationInput
-        {...rest}
-        value={value}
-        onChange={onChange}
-        password={password}
-      />
-    );
+    const { type, ...rest } = props as PasswordConfirmationInputProps;
+    return <PasswordConfirmationInput {...rest} />;
+  }
+
+  if (type === "tag") {
+    const { type, ...rest } = props as TagInputProps;
+    return <TagInput {...rest} />;
   }
 
   if (type === "search") {
-    const { value, maxWidth, ...rest } = props as SearchInputProps;
-    return (
-      <SearchInput
-        {...rest}
-        value={value}
-        onChange={onChange}
-        maxWidth={maxWidth}
-      />
-    );
+    const { type, ...rest } = props as SearchInputProps;
+    return <SearchInput {...rest} />;
   }
 
   return null;
