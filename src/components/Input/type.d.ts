@@ -4,7 +4,7 @@ export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   type: "text";
   value: string;
   name: string;
-  required?: boolean;
+  required: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -13,7 +13,7 @@ export interface NumberInputProps
   type: "number";
   value: number;
   name: string;
-  required?: boolean;
+  required: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -21,6 +21,7 @@ export interface EmailInputProps extends InputHTMLAttributes<HTMLInputElement> {
   type: "email";
   value: string;
   name: string;
+  required: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -29,6 +30,7 @@ export interface PasswordInputProps
   type: "password";
   value: string;
   name: string;
+  required: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -38,6 +40,7 @@ export interface PasswordConfirmationInputProps
   value: string;
   name: string;
   password: string;
+  required: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 

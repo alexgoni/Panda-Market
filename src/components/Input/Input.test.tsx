@@ -19,6 +19,7 @@ describe("Input Component", () => {
             type="text"
             name="text"
             value={value}
+            required
             onChange={handleChange}
           />
         </Form>
@@ -49,6 +50,7 @@ describe("Input Component", () => {
             type="number"
             name="text"
             value={value}
+            required
             onChange={handleChange}
           />
         </Form>
@@ -80,6 +82,7 @@ describe("Input Component", () => {
             type="email"
             name="text"
             value={value}
+            required
             onChange={handleChange}
           />
         </Form>
@@ -147,6 +150,7 @@ describe("Input Component", () => {
             data-testid="password"
             value={formValue.password}
             onChange={handleChange}
+            required
           />
           <Input
             type="password-confirmation"
@@ -155,6 +159,7 @@ describe("Input Component", () => {
             password={formValue.password}
             value={formValue.passwordConfirmation}
             onChange={handleChange}
+            required
           />
         </Form>
       );
@@ -242,6 +247,7 @@ describe("Input Component", () => {
           value={value}
           onChange={handleChange}
           maxWidth="500px"
+          required
         />
       );
     }

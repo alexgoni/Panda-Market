@@ -13,7 +13,7 @@ const MIN_PASSWORD_LENGTH = 8;
 type Props = Omit<PasswordConfirmationInputProps, "type">;
 
 export default function PasswordConfirmationInput(props: Props) {
-  const { name, onChange, password, ...rest } = props;
+  const { name, onChange, password, required, ...rest } = props;
   const [passwordOpen, setPasswordOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { handleValidationState } = useFormContext();
@@ -25,18 +25,20 @@ export default function PasswordConfirmationInput(props: Props) {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
 
-    if (newValue.trim() === "") {
-      setError(null);
-      handleValidationState({ [name]: false });
-    } else if (newValue.length < MIN_PASSWORD_LENGTH) {
-      setError("비밀번호를 8자 이상 입력해주세요.");
-      handleValidationState({ [name]: false });
-    } else if (newValue !== password) {
-      setError("비밀번호가 일치하지 않습니다.");
-      handleValidationState({ [name]: false });
-    } else {
-      setError(null);
-      handleValidationState({ [name]: true });
+    if (required) {
+      if (newValue.trim() === "") {
+        setError(null);
+        handleValidationState({ [name]: false });
+      } else if (newValue.length < MIN_PASSWORD_LENGTH) {
+        setError("비밀번호를 8자 이상 입력해주세요.");
+        handleValidationState({ [name]: false });
+      } else if (newValue !== password) {
+        setError("비밀번호가 일치하지 않습니다.");
+        handleValidationState({ [name]: false });
+      } else {
+        setError(null);
+        handleValidationState({ [name]: true });
+      }
     }
 
     onChange(e);
@@ -54,6 +56,7 @@ export default function PasswordConfirmationInput(props: Props) {
           type={passwordOpen ? "text" : "password"}
           name={name}
           className={inputClassnames}
+          required={required}
           onChange={handleChange}
         />
         <button

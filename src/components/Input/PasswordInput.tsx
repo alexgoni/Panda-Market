@@ -13,7 +13,7 @@ const MIN_PASSWORD_LENGTH = 8;
 type Props = Omit<PasswordInputProps, "type">;
 
 export default function PasswordInput(props: Props) {
-  const { name, onChange, ...rest } = props;
+  const { name, onChange, required, ...rest } = props;
   const [passwordOpen, setPasswordOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { handleValidationState } = useFormContext();
@@ -25,15 +25,17 @@ export default function PasswordInput(props: Props) {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
 
-    if (newValue.trim() === "") {
-      setError(null);
-      handleValidationState({ [name]: false });
-    } else if (newValue.length < MIN_PASSWORD_LENGTH) {
-      setError("비밀번호를 8자 이상 입력해주세요.");
-      handleValidationState({ [name]: false });
-    } else {
-      setError(null);
-      handleValidationState({ [name]: true });
+    if (required) {
+      if (newValue.trim() === "") {
+        setError(null);
+        handleValidationState({ [name]: false });
+      } else if (newValue.length < MIN_PASSWORD_LENGTH) {
+        setError("비밀번호를 8자 이상 입력해주세요.");
+        handleValidationState({ [name]: false });
+      } else {
+        setError(null);
+        handleValidationState({ [name]: true });
+      }
     }
 
     onChange(e);
@@ -51,6 +53,7 @@ export default function PasswordInput(props: Props) {
           type={passwordOpen ? "text" : "password"}
           className={inputClassnames}
           name={name}
+          required={required}
           onChange={handleChange}
         />
         <button

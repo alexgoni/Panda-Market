@@ -1,4 +1,5 @@
 import Button from "components/Button";
+import ImageUploader from "components/ImageUploader";
 import Input from "components/Input";
 import Textarea from "components/Textarea";
 import {
@@ -45,10 +46,17 @@ export default function Form(
     Record<string, boolean>
   >(() => {
     const inputElements = childrenElements.filter(
-      (child) => child.type === Input,
+      (child) =>
+        (child.type === Input || child.type === "input") &&
+        child.props.required,
     );
     const textareaElements = childrenElements.filter(
-      (child) => child.type === Textarea,
+      (child) =>
+        (child.type === Textarea || child.type === "textarea") &&
+        child.props.required,
+    );
+    const imageUploaderElements = childrenElements.filter(
+      (child) => child.type === ImageUploader && child.props.required,
     );
 
     const initialValidationState: Record<string, boolean> = {};
@@ -58,6 +66,10 @@ export default function Form(
       if (name) initialValidationState[name] = false;
     });
     textareaElements.forEach((element) => {
+      const { name } = element.props;
+      if (name) initialValidationState[name] = false;
+    });
+    imageUploaderElements.forEach((element) => {
       const { name } = element.props;
       if (name) initialValidationState[name] = false;
     });

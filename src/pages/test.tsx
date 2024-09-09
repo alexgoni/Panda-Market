@@ -1,19 +1,31 @@
 import Button from "components/Button";
 import Form from "components/Form";
+import ImageUploader from "components/ImageUploader";
 import Input from "components/Input";
 import Pagination from "components/Pagination";
 import Textarea from "components/Textarea";
 import { ChangeEvent, useEffect, useState } from "react";
 
+interface FormValue {
+  nickname: string;
+  price: number;
+  email: string;
+  password: string;
+  passwordConfirmation: string;
+  textarea: string;
+  imageUploader: File | null;
+}
+
 export default function Test() {
   const [page, setPage] = useState(2);
-  const [formValue, setFormValue] = useState({
+  const [formValue, setFormValue] = useState<FormValue>({
     nickname: "",
     price: 0,
     email: "",
     password: "",
     passwordConfirmation: "",
     textarea: "",
+    imageUploader: null,
   });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,6 +43,15 @@ export default function Test() {
     setFormValue((prev) => ({
       ...prev,
       [name]: value,
+    }));
+  };
+
+  const handleImageChange = (e: File | null) => {
+    const name = "imageUploader";
+
+    setFormValue((prev) => ({
+      ...prev,
+      [name]: e,
     }));
   };
 
@@ -73,6 +94,7 @@ export default function Test() {
           value={formValue.email}
           onChange={handleChange}
           placeholder="이메일을 입력하세요"
+          required={false}
         />
         <Input
           type="password"
@@ -80,6 +102,7 @@ export default function Test() {
           value={formValue.password}
           onChange={handleChange}
           placeholder="비밀번호를 입력하세요"
+          required={false}
         />
         <Input
           type="password-confirmation"
@@ -88,6 +111,7 @@ export default function Test() {
           onChange={handleChange}
           password={formValue.password}
           placeholder="비밀번호를 확인합시다"
+          required={false}
         />
         <Button type="submit">asdf</Button>
         <Textarea
@@ -96,6 +120,11 @@ export default function Test() {
           size="sm"
           value={formValue.textarea}
           onChange={handleTextareaChange}
+          required
+        />
+        <ImageUploader
+          name="imageUploader"
+          onChange={handleImageChange}
           required
         />
       </Form>
