@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import Form from "components/Form";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, KeyboardEvent, useState } from "react";
 
 import Input from ".";
 
@@ -228,6 +228,83 @@ describe("Input Component", () => {
         screen.queryByText("비밀번호를 8자 이상 입력해주세요."),
       ).toBeNull();
       expect(screen.queryByText("비밀번호가 일치하지 않습니다.")).toBeNull();
+    });
+  });
+
+  describe("TagInput", () => {
+    function TagInputComponent() {
+      const [tagList, setTagList] = useState<string[]>([]);
+
+      const handleTagKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
+        setTagList((prev) => [...prev, e.currentTarget.value]);
+      };
+
+      const handleTagDelete = (target: string) => {
+        setTagList((prev) => prev.filter((tag) => tag !== target));
+      };
+
+      const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+      };
+
+      return (
+        <Form onSubmit={handleSubmit}>
+          <Input
+            type="tag"
+            name="tag"
+            value={tagList}
+            onKeyUp={handleTagKeyUp}
+            onDelete={handleTagDelete}
+            required
+          />
+        </Form>
+      );
+    }
+
+    it("handleChange 테스트", () => {
+      render(<TagInputComponent />);
+      const inputElement = screen.getByRole("textbox");
+
+      fireEvent.change(inputElement, { target: { value: "테스트 입력" } });
+
+      expect(inputElement).toHaveValue("테스트 입력");
+    });
+
+    it("Enter key 테스트", () => {
+      render(<TagInputComponent />);
+
+      const input = screen.getByRole("textbox");
+      fireEvent.change(input, { target: { value: "new-tag" } });
+      fireEvent.keyUp(input, { key: "Enter" });
+
+      expect(screen.getByText("#new-tag")).toBeInTheDocument();
+      expect(input).toHaveValue("");
+    });
+
+    it("중복 태그 테스트", () => {
+      window.alert = jest.fn();
+      render(<TagInputComponent />);
+
+      const input = screen.getByRole("textbox");
+      fireEvent.change(input, { target: { value: "duplicate-tag" } });
+      fireEvent.keyUp(input, { key: "Enter" });
+      fireEvent.change(input, { target: { value: "duplicate-tag" } });
+      fireEvent.keyUp(input, { key: "Enter" });
+
+      expect(window.alert).toHaveBeenCalledWith("같은 태그가 있습니다.");
+    });
+
+    it("태그 제거 테스트", () => {
+      render(<TagInputComponent />);
+
+      const input = screen.getByRole("textbox");
+      fireEvent.change(input, { target: { value: "tag-to-delete" } });
+      fireEvent.keyUp(input, { key: "Enter" });
+
+      const deleteButton = screen.getByLabelText("delete-icon");
+      fireEvent.click(deleteButton);
+
+      expect(screen.queryByText("tag-to-delete")).not.toBeInTheDocument();
     });
   });
 
