@@ -3,6 +3,7 @@ import Form from "components/Form";
 import ImageUploader from "components/ImageUploader";
 import Input from "components/Input";
 import Footer from "components/Layout/Footer";
+import MainLayout from "components/Layout/MainLayout";
 import Navbar from "components/Layout/Navbar";
 import Pagination from "components/Pagination";
 import Textarea from "components/Textarea";
@@ -89,95 +90,81 @@ export default function Test() {
     <>
       <Navbar />
 
-      <Button>판다마켓</Button>
-      <Pagination
-        totalPages={7}
-        currentPage={page}
-        onPageChange={handlePageChange}
-      />
-      <Form>
-        <Input
-          type="tag"
-          value={formValue.tagList}
-          name="tagList"
-          required={false}
-          onKeyUp={handleTagKeyUp}
-          onDelete={handleTagDelete}
-          placeholder="태그를 입력하세요"
+      <MainLayout>
+        <Button>판다마켓</Button>
+        <Pagination
+          totalPages={7}
+          currentPage={page}
+          onPageChange={handlePageChange}
         />
-        <Input
-          type="text"
-          name="nickname"
-          value={formValue.nickname}
-          onChange={handleChange}
-          placeholder="이름"
-          required
-        />
-        <Input
-          type="number"
-          name="price"
-          value={formValue.price}
-          onChange={handleChange}
-          placeholder="가격"
-          required
-        />
-        <Input
-          type="email"
-          name="email"
-          value={formValue.email}
-          onChange={handleChange}
-          placeholder="이메일을 입력하세요"
-          required
-        />
-        <Input
-          type="password"
-          name="password"
-          value={formValue.password}
-          onChange={handleChange}
-          placeholder="비밀번호를 입력하세요"
-          required
-        />
-        <Input
-          type="password-confirmation"
-          name="passwordConfirmation"
-          value={formValue.passwordConfirmation}
-          onChange={handleChange}
-          password={formValue.password}
-          placeholder="비밀번호를 확인합시다"
-          required
-        />
-        <Button type="submit">asdf</Button>
-        <Textarea
-          placeholder="asdf"
-          name="textarea"
-          size="sm"
-          value={formValue.textarea}
-          onChange={handleTextareaChange}
-          required
-        />
-        <ImageUploader
-          name="imageUploader"
-          onChange={handleImageChange}
-          required
-        />
-
-        <Footer />
-      </Form>
-
-      {/* <Input
-        type="password"
-        value=""
-        onChange={handleChange}
-        placeholder="asfd"
-        name="asdf"
-      />
-      <Input
-        type="search"
-        value=""
-        onChange={handleChange}
-        placeholder="asdfsdf"
-        maxWidth="500px"
-      /> */}
+        <Form>
+          <Input
+            type="tag"
+            value={formValue.tagList}
+            name="tagList"
+            required={false}
+            onKeyUp={handleTagKeyUp}
+            onDelete={handleTagDelete}
+            placeholder="태그를 입력하세요"
+          />
+          <Input
+            type="text"
+            name="nickname"
+            value={formValue.nickname}
+            onChange={handleChange}
+            placeholder="이름"
+            required
+          />
+          <Input
+            type="number"
+            name="price"
+            value={formValue.price}
+            onChange={handleChange}
+            placeholder="가격"
+            required
+          />
+          <Input
+            type="email"
+            name="email"
+            value={formValue.email}
+            onChange={handleChange}
+            placeholder="이메일을 입력하세요"
+            required
+          />
+          <Input
+            type="password"
+            name="password"
+            value={formValue.password}
+            onChange={handleChange}
+            placeholder="비밀번호를 입력하세요"
+            required
+          />
+          <Input
+            type="password-confirmation"
+            name="passwordConfirmation"
+            value={formValue.passwordConfirmation}
+            onChange={handleChange}
+            password={formValue.password}
+            placeholder="비밀번호를 확인합시다"
+            required
+          />
+          <Button type="submit">asdf</Button>
+          <Textarea
+            placeholder="asdf"
+            name="textarea"
+            size="sm"
+            value={formValue.textarea}
+            onChange={handleTextareaChange}
+            required
+          />
+          <ImageUploader
+            name="imageUploader"
+            onChange={handleImageChange}
+            required
+          />
+        </Form>
+      </MainLayout>
+      <Footer />
     </>
   );
 }
