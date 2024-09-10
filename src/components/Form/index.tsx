@@ -45,31 +45,31 @@ export default function Form(
   const [validationState, setValidationState] = useState<
     Record<string, boolean>
   >(() => {
-    const inputElements = childrenElements.filter(
+    const inputElementsForValidation = childrenElements.filter(
       (child) =>
         (child.type === Input || child.type === "input") &&
         child.props.required,
     );
-    const textareaElements = childrenElements.filter(
+    const textareaElementsForValidation = childrenElements.filter(
       (child) =>
         (child.type === Textarea || child.type === "textarea") &&
         child.props.required,
     );
-    const imageUploaderElements = childrenElements.filter(
+    const imageUploaderElementsForValidation = childrenElements.filter(
       (child) => child.type === ImageUploader && child.props.required,
     );
 
     const initialValidationState: Record<string, boolean> = {};
 
-    inputElements.forEach((element) => {
+    inputElementsForValidation.forEach((element) => {
       const { name } = element.props;
       if (name) initialValidationState[name] = false;
     });
-    textareaElements.forEach((element) => {
+    textareaElementsForValidation.forEach((element) => {
       const { name } = element.props;
       if (name) initialValidationState[name] = false;
     });
-    imageUploaderElements.forEach((element) => {
+    imageUploaderElementsForValidation.forEach((element) => {
       const { name } = element.props;
       if (name) initialValidationState[name] = false;
     });

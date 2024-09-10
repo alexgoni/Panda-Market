@@ -13,7 +13,7 @@ interface Props {
   name: string;
   defaultValue?: string;
   onChange: (file: File | null) => void;
-  required?: boolean;
+  required: boolean;
 }
 
 export default function ImageUploader({
