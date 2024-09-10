@@ -2,6 +2,7 @@ import Button from "components/Button";
 import Form from "components/Form";
 import ImageUploader from "components/ImageUploader";
 import Input from "components/Input";
+import Footer from "components/Layout/Footer";
 import Navbar from "components/Layout/Navbar";
 import Pagination from "components/Pagination";
 import Textarea from "components/Textarea";
@@ -87,6 +88,7 @@ export default function Test() {
   return (
     <>
       <Navbar />
+
       <Button>판다마켓</Button>
       <Pagination
         totalPages={7}
@@ -158,6 +160,8 @@ export default function Test() {
           onChange={handleImageChange}
           required
         />
+
+        <Footer />
       </Form>
 
       {/* <Input
