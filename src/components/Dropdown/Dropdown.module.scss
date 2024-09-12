@@ -1,0 +1,45 @@
+/* Root */
+
+.root {
+  position: relative;
+  width: fit-content;
+  z-index: var(--dropdown);
+}
+
+/* List */
+
+.option-list {
+  border: 1px solid var(--gray-200);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  background-color: white;
+  text-align: center;
+  border-radius: 12px;
+}
+
+/* Option */
+
+.option {
+  padding: 9px 0px;
+  cursor: pointer;
+
+  &:first-child {
+    border-bottom: 1px solid var(--gray-200);
+
+    &:hover,
+    &:focus {
+      background-color: var(--gray-50);
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+    }
+  }
+
+  &:last-child {
+    &:hover,
+    &:focus {
+      background-color: var(--gray-50);
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
+    }
+  }
+}
