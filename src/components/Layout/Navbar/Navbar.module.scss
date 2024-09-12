@@ -18,6 +18,22 @@
     padding: 10px 200px;
   }
 
+  .main-logo {
+    display: none;
+
+    @media (min-width: 768px) {
+      display: block;
+    }
+  }
+
+  .mobile-main-logo {
+    display: block;
+
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
+
   .menus {
     flex-grow: 1;
     font-weight: 700;
