@@ -13,10 +13,10 @@ interface Props {
   }) => ReactNode;
 }
 
-const ToggleButton = forwardRef<HTMLDivElement, Props>(({ children }, ref) => {
+const Trigger = forwardRef<HTMLDivElement, Props>(({ children }, ref) => {
   const { isOpen, toggle } = useDropdownContext();
 
   return <div ref={ref}>{children({ isOpen, toggle })}</div>;
 });
 
-export default ToggleButton;
+export default Trigger;

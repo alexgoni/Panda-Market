@@ -12,47 +12,47 @@ interface Props extends PropsWithChildren {
 }
 
 export default function List({ children, position = "center", width }: Props) {
-  const { isOpen, toggleButtonRef } = useDropdownContext();
+  const { isOpen, triggerRef } = useDropdownContext();
 
-  const { topPosition, buttonWidth } = useMemo(() => {
-    if (!toggleButtonRef.current) return { topPosition: "0", buttonWidth: "0" };
+  const { topPosition, triggerWidth } = useMemo(() => {
+    if (!triggerRef.current) return { topPosition: "0", triggerWidth: "0" };
 
-    const rect = toggleButtonRef.current.getBoundingClientRect();
+    const rect = triggerRef.current.getBoundingClientRect();
     return {
       topPosition: `${rect.height + 8}px`,
-      buttonWidth: `${rect.width}px`,
+      triggerWidth: `${rect.width}px`,
     };
-  }, [toggleButtonRef.current]);
+  }, [triggerRef.current]);
 
-  const inlineStyle = useMemo(() => {
+  const listStyle = useMemo(() => {
     if (position === "center") {
       return {
-        width: buttonWidth,
+        width: triggerWidth,
       };
     }
 
     if (position === "left") {
       return {
-        width: width ?? buttonWidth,
+        width: width ?? triggerWidth,
         left: 0,
       };
     }
 
     if (position === "right") {
       return {
-        width: width ?? buttonWidth,
+        width: width ?? triggerWidth,
         right: 0,
       };
     }
 
     return undefined;
-  }, [position, width]);
+  }, [position, width, triggerRef.current]);
 
   if (!isOpen) return null;
 
   return (
     <ul
-      style={{ top: topPosition, ...inlineStyle }}
+      style={{ top: topPosition, ...listStyle }}
       className={cx("option-list")}
     >
       {children}

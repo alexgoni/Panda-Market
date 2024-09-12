@@ -13,33 +13,33 @@ import {
   useState,
 } from "react";
 
-import styles from "./Dropdown.module.scss";
+import styles from "./Popover.module.scss";
 // eslint-disable-next-line import/no-cycle
 import Trigger from "./Trigger";
 
 const cx = classNames.bind(styles);
 
-interface DropdownContextType {
+interface PopoverContextType {
   isOpen: boolean;
   toggle: () => void;
   triggerRef: RefObject<HTMLDivElement>;
 }
 
-const DropdownContext = createContext<DropdownContextType | null>(null);
+const PopoverContext = createContext<PopoverContextType | null>(null);
 
-export function useDropdownContext() {
-  const context = useContext(DropdownContext);
+export function usePopoverContext() {
+  const context = useContext(PopoverContext);
 
   if (!context) {
-    throw new Error("Dropdown 컨텍스트를 호출할 수 없는 범위입니다.");
+    throw new Error("Popover 컨텍스트를 호출할 수 없는 범위입니다.");
   }
 
   return context;
 }
 
-export default function DropdownRoot({ children }: { children: ReactNode }) {
+export default function PopoverRoot({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const popoverRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
 
   const toggle = () => {
@@ -47,7 +47,7 @@ export default function DropdownRoot({ children }: { children: ReactNode }) {
   };
 
   useClickOutside({
-    ref: dropdownRef,
+    ref: popoverRef,
     handler: () => {
       setIsOpen(false);
     },
@@ -74,10 +74,10 @@ export default function DropdownRoot({ children }: { children: ReactNode }) {
   }, [children]);
 
   return (
-    <DropdownContext.Provider value={contextValue}>
-      <div ref={dropdownRef} className={cx("root")}>
+    <PopoverContext.Provider value={contextValue}>
+      <div ref={popoverRef} className={cx("root")}>
         {updatedChildren}
       </div>
-    </DropdownContext.Provider>
+    </PopoverContext.Provider>
   );
 }

@@ -15,7 +15,7 @@ interface Props {
 export default function OrderByDropdown({ orderBy, handleOrderChange }: Props) {
   return (
     <Dropdown.Root>
-      <Dropdown.ToggleButton>
+      <Dropdown.Trigger>
         {({ isOpen, toggle }) => (
           <button
             type="button"
@@ -37,7 +37,7 @@ export default function OrderByDropdown({ orderBy, handleOrderChange }: Props) {
             </span>
           </button>
         )}
-      </Dropdown.ToggleButton>
+      </Dropdown.Trigger>
 
       <Dropdown.List>
         <Dropdown.Option

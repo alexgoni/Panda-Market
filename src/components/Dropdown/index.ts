@@ -1,11 +1,11 @@
 import List from "./List";
 import Option from "./Option";
-import DropdownRoot from "./Root";
-import ToggleButton from "./ToggleButton";
+import Root from "./Root";
+import Trigger from "./Trigger";
 
 const Dropdown = {
-  Root: DropdownRoot,
-  ToggleButton,
+  Root,
+  Trigger,
   List,
   Option,
 };
