@@ -23,8 +23,18 @@ export default function Market() {
         />
 
         <Popover.Root>
-          <Popover.Trigger>a</Popover.Trigger>
-          <Popover.Content position="right">
+          <Popover.Trigger>
+            <div
+              style={{
+                width: "200px",
+                height: "40px",
+                border: "1px solid black",
+              }}
+            >
+              Trigger
+            </div>
+          </Popover.Trigger>
+          <Popover.Content position="left">
             <>
               <div>수정하기</div>
               <div>삭제하기</div>
