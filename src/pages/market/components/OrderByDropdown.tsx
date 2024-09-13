@@ -39,7 +39,7 @@ export default function OrderByDropdown({ orderBy, handleOrderChange }: Props) {
         )}
       </Dropdown.Trigger>
 
-      <Dropdown.List>
+      <Dropdown.List width="300px" position="right">
         <Dropdown.Option
           onClick={() => {
             handleOrderChange("최신순");

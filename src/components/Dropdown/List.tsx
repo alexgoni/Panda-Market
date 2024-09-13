@@ -18,6 +18,7 @@ export default function List({ children, position = "center", width }: Props) {
     if (!triggerRef.current) return { topPosition: "0", triggerWidth: "0" };
 
     const rect = triggerRef.current.getBoundingClientRect();
+
     return {
       topPosition: `${rect.height + 8}px`,
       triggerWidth: `${rect.width}px`,
@@ -34,14 +35,14 @@ export default function List({ children, position = "center", width }: Props) {
     if (position === "left") {
       return {
         width: width ?? triggerWidth,
-        left: 0,
+        left: "0px",
       };
     }
 
     if (position === "right") {
       return {
         width: width ?? triggerWidth,
-        right: 0,
+        right: "0px",
       };
     }
 
