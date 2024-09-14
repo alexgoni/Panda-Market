@@ -3,9 +3,8 @@
   align-items: center;
   padding: 10px 16px;
   border: 1px solid #dfdfdf;
-  position: fixed;
+  position: sticky;
   top: 0;
-  width: 100%;
   z-index: var(--navbar);
   background-color: white;
   height: 76px;
