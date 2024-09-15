@@ -1,3 +1,4 @@
+import { GetMyProductsResponse } from "@panda-market-api";
 import Button from "components/Button";
 import Form from "components/Form";
 import ImageUploader from "components/ImageUploader";
