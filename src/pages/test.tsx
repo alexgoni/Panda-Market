@@ -1,4 +1,3 @@
-import { GetMyProductsResponse } from "@panda-market-api";
 import Button from "components/Button";
 import Form from "components/Form";
 import ImageUploader from "components/ImageUploader";
@@ -9,6 +8,7 @@ import Navbar from "components/Layout/Navbar";
 import Pagination from "components/Pagination";
 import Textarea from "components/Textarea";
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
+import CustomFetch from "utils/CustomFetch";
 
 interface FormValue {
   nickname: string;
@@ -83,6 +83,37 @@ export default function Test() {
     setPage(newPage);
   };
 
+  const customFetch = new CustomFetch({
+    baseUrl: "https://panda-market-api.vercel.app",
+  });
+
+  const uploadImage = async () => {
+    const formData = new FormData();
+    formData.append("image", formValue.imageUploader as File);
+
+    try {
+      const response = await customFetch.post("/images/upload", {
+        body: formData,
+      });
+
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+
+    // console.log(response);
+
+    // const response = await fetch(
+    //   "https://panda-market-api.vercel.app/images/upload",
+    //   {
+    //     method: "POST",
+    //     body: formData,
+    //   },
+    // );
+
+    // const result = await response.json();
+  };
+
   useEffect(() => {
     fetch("/api/users");
   }, []);
@@ -92,6 +123,7 @@ export default function Test() {
       <Navbar />
 
       <MainLayout>
+        <Button onClick={uploadImage}>이미지 업로드</Button>
         <Button>판다마켓</Button>
         <Pagination
           totalPages={7}
