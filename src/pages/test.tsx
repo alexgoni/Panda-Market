@@ -8,7 +8,7 @@ import Navbar from "components/Layout/Navbar";
 import Pagination from "components/Pagination";
 import Textarea from "components/Textarea";
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
-import CustomFetch from "utils/CustomFetch";
+import CustomFetch from "utils/HTTPClient";
 
 interface FormValue {
   nickname: string;

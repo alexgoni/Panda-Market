@@ -44,8 +44,8 @@ declare module "@panda-market-api" {
   }
 
   // POST '/products/{productId}/favorite'
-  export type PostProductLike = ProductResponse;
+  export type AddFavoriteProductResponse = ProductResponse;
 
   // DELETE '/products/{productId}/favorite'
-  export type DeleteProductLike = ProductResponse;
+  export type DeleteFavoriteProductResponse = ProductResponse;
 }

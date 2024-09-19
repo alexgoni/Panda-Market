@@ -43,6 +43,12 @@
       "rules": {
         "@typescript-eslint/no-use-before-define": "off"
       }
+    },
+    {
+      "files": ["src/api/**/*.ts", "src/api/**/*.js"],
+      "rules": {
+        "no-console": "off"
+      }
     }
   ]
 }

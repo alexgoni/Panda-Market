@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-interface CustomFetchOptions {
+interface HTTPClientOptions {
   baseUrl?: string;
   timeout?: number;
 }
@@ -13,13 +13,13 @@ interface ResponseInterceptor {
   onError?: (error: any) => Promise<any>;
 }
 
-export default class CustomFetch {
+export default class HTTPClient {
   public baseUrl: string;
   public timeout: number;
   private requestInterceptor: RequestInterceptor = {};
   private responseInterceptor: ResponseInterceptor = {};
 
-  constructor({ baseUrl = "", timeout = 5000 }: CustomFetchOptions = {}) {
+  constructor({ baseUrl = "", timeout = 5000 }: HTTPClientOptions = {}) {
     this.baseUrl = baseUrl;
     this.timeout = timeout;
   }
@@ -36,7 +36,7 @@ export default class CustomFetch {
     this.responseInterceptor.onError = onError;
   }
 
-  private async request(url: string, config: RequestInit): Promise<any> {
+  private async request<T>(url: string, config: RequestInit): Promise<T> {
     const controller = new AbortController();
     const { signal } = controller;
     const timeoutId = setTimeout(() => controller.abort(), this.timeout);
@@ -70,14 +70,14 @@ export default class CustomFetch {
     }
   }
 
-  get(url: string, config: Omit<RequestInit, "method"> = {}) {
-    return this.request(url, { ...config, method: "GET" });
+  get<T>(url: string, config: Omit<RequestInit, "method"> = {}) {
+    return this.request<T>(url, { ...config, method: "GET" });
   }
 
-  post(url: string, config: Omit<RequestInit, "method"> = {}) {
+  post<T>(url: string, config: Omit<RequestInit, "method"> = {}) {
     const isFormData = config.body instanceof FormData;
 
-    return this.request(url, {
+    return this.request<T>(url, {
       ...config,
       method: "POST",
       headers: isFormData
@@ -88,10 +88,10 @@ export default class CustomFetch {
     });
   }
 
-  patch(url: string, config: Omit<RequestInit, "method"> = {}) {
+  patch<T>(url: string, config: Omit<RequestInit, "method"> = {}) {
     const isFormData = config.body instanceof FormData;
 
-    return this.request(url, {
+    return this.request<T>(url, {
       ...config,
       method: "PATCH",
       headers: isFormData
@@ -102,7 +102,7 @@ export default class CustomFetch {
     });
   }
 
-  delete(url: string, config: Omit<RequestInit, "method"> = {}) {
-    return this.request(url, { ...config, method: "DELETE" });
+  delete<T>(url: string, config: Omit<RequestInit, "method"> = {}) {
+    return this.request<T>(url, { ...config, method: "DELETE" });
   }
 }

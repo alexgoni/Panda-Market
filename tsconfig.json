@@ -21,7 +21,8 @@
       "styles/*": ["styles/*"],
       "assets/*": ["assets/*"],
       "hooks/*": ["hooks/*"],
-      "utils/*": ["utils/*"]
+      "utils/*": ["utils/*"],
+      "api/*": ["api/*"]
     }
   },
   "include": ["src", "@types"],
