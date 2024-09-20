@@ -10,3 +10,4 @@
 8. abortController
 9. Link prefetch 컴포넌트
 10. Toast 컴포넌트
+11. localStorage 임시 저장

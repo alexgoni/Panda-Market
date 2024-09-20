@@ -1,11 +1,11 @@
 import type {
-  PostRefreshTokenRequest,
   PostSignInRequest,
   PostSignInResponse,
   PostSignUpRequest,
   PostSignUpResponse,
 } from "@panda-market-api";
 
+// eslint-disable-next-line import/no-cycle
 import httpClient from ".";
 
 // POST '/auth/signUp'
@@ -44,10 +44,10 @@ export async function postSignIn(formValue: PostSignInRequest) {
 
 // POST '/auth/refresh-token'
 
-export async function postRefreshToken(formValue: PostRefreshTokenRequest) {
+export async function postRefreshToken(refreshToken: string) {
   try {
     const url = `/auth/refresh-token`;
-    const body = JSON.stringify({ ...formValue });
+    const body = JSON.stringify({ refreshToken });
     const response = await httpClient.post<PostSignInResponse>(url, {
       body,
     });

@@ -10,7 +10,13 @@ interface RequestInterceptor {
 
 interface ResponseInterceptor {
   onResponse?: (response: Response) => Promise<Response>;
-  onError?: (error: any) => Promise<any>;
+  onError?: ({
+    error,
+    originalRequest,
+  }: {
+    error: Response;
+    originalRequest?: RequestInit;
+  }) => Promise<any>;
 }
 
 export default class HTTPClient {
@@ -28,10 +34,13 @@ export default class HTTPClient {
     this.requestInterceptor.onRequest = onRequest;
   }
 
-  setResponseInterceptor(
-    onResponse: ResponseInterceptor["onResponse"],
-    onError?: ResponseInterceptor["onError"],
-  ) {
+  setResponseInterceptor({
+    onResponse,
+    onError,
+  }: {
+    onResponse?: ResponseInterceptor["onResponse"];
+    onError?: ResponseInterceptor["onError"];
+  }) {
     this.responseInterceptor.onResponse = onResponse;
     this.responseInterceptor.onError = onError;
   }
@@ -41,9 +50,9 @@ export default class HTTPClient {
     const { signal } = controller;
     const timeoutId = setTimeout(() => controller.abort(), this.timeout);
 
-    try {
-      let updatedConfig = { ...config };
+    let updatedConfig = { ...config };
 
+    try {
       if (this.requestInterceptor.onRequest) {
         updatedConfig = this.requestInterceptor.onRequest(updatedConfig);
       }
@@ -60,10 +69,14 @@ export default class HTTPClient {
       return finalResponse.ok
         ? await finalResponse.json()
         : await Promise.reject(finalResponse);
-    } catch (error: any) {
-      if (this.responseInterceptor.onError) {
-        return await this.responseInterceptor.onError(error);
+    } catch (error: unknown) {
+      if (error instanceof Response && this.responseInterceptor.onError) {
+        return await this.responseInterceptor.onError({
+          error,
+          originalRequest: updatedConfig,
+        });
       }
+
       throw error;
     } finally {
       clearTimeout(timeoutId);
@@ -81,8 +94,9 @@ export default class HTTPClient {
       ...config,
       method: "POST",
       headers: isFormData
-        ? {}
+        ? { ...config.headers }
         : {
+            ...config.headers,
             "Content-Type": "application/json",
           },
     });
@@ -95,8 +109,9 @@ export default class HTTPClient {
       ...config,
       method: "PATCH",
       headers: isFormData
-        ? {}
+        ? { ...config.headers }
         : {
+            ...config.headers,
             "Content-Type": "application/json",
           },
     });
