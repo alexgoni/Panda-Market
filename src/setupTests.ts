@@ -1,4 +1,5 @@
 import "@testing-library/jest-dom";
+import { TextEncoder } from "util";
 
 // window.matchMedia
 
@@ -14,4 +15,10 @@ Object.defineProperty(window, "matchMedia", {
     removeEventListener: jest.fn(),
     dispatchEvent: jest.fn(),
   })),
+});
+
+// TextEncoder
+
+Object.defineProperties(globalThis, {
+  TextEncoder: { value: TextEncoder },
 });

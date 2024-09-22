@@ -18,13 +18,16 @@ httpClient.setRequestInterceptor((config) => {
 });
 
 httpClient.setResponseInterceptor({
-  onError: async ({ error, originalRequest }) => {
-    if (error.status !== 401) throw new Error("Unauthorized error");
+  onError: async ({ response, originalRequest }) => {
+    if (response.status !== 401) throw new Error("Unauthorized error");
 
     const refreshToken = getCookie("refreshToken");
     if (!refreshToken) throw new Error("No refresh token available");
 
-    const url = error.url.replace(process.env.REACT_APP_BASE_URL as string, "");
+    const url = response.url.replace(
+      process.env.REACT_APP_BASE_URL as string,
+      "",
+    );
     const method = originalRequest?.method?.toLowerCase() as
       | "get"
       | "post"
@@ -33,15 +36,18 @@ httpClient.setResponseInterceptor({
     const updatedConfig = { ...originalRequest };
 
     try {
-      const response = await postRefreshToken(refreshToken);
+      const refreshTokenResponse = await postRefreshToken(refreshToken);
       setCookie({
         name: "accessToken",
-        value: response.accessToken,
+        value: refreshTokenResponse.accessToken,
         time: 360_000,
       });
 
       const headers = new Headers(updatedConfig.headers || {});
-      headers.set("Authorization", `Bearer ${response.accessToken}`);
+      headers.set(
+        "Authorization",
+        `Bearer ${refreshTokenResponse.accessToken}`,
+      );
       updatedConfig.headers = headers;
 
       return await httpClient[method](url, updatedConfig);

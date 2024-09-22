@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import HttpError from "./HTTPError";
+
 interface HTTPClientOptions {
   baseUrl?: string;
   timeout?: number;
@@ -11,10 +13,10 @@ interface RequestInterceptor {
 interface ResponseInterceptor {
   onResponse?: (response: Response) => Promise<Response>;
   onError?: ({
-    error,
+    response,
     originalRequest,
   }: {
-    error: Response;
+    response: Response;
     originalRequest?: RequestInit;
   }) => Promise<any>;
 }
@@ -48,7 +50,13 @@ export default class HTTPClient {
   private async request<T>(url: string, config: RequestInit): Promise<T> {
     const controller = new AbortController();
     const { signal } = controller;
-    const timeoutId = setTimeout(() => controller.abort(), this.timeout);
+
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => {
+        controller.abort();
+        reject(new Error("Timeout Error"));
+      }, this.timeout);
+    });
 
     let updatedConfig = { ...config };
 
@@ -57,29 +65,34 @@ export default class HTTPClient {
         updatedConfig = this.requestInterceptor.onRequest(updatedConfig);
       }
 
-      const response = await fetch(`${this.baseUrl}${url}`, {
+      const fetchPromise = fetch(`${this.baseUrl}${url}`, {
         ...updatedConfig,
         signal,
       });
 
-      const finalResponse = this.responseInterceptor.onResponse
-        ? await this.responseInterceptor.onResponse(response)
-        : response;
+      const response = await Promise.race([fetchPromise, timeoutPromise]);
 
-      return finalResponse.ok
-        ? await finalResponse.json()
-        : await Promise.reject(finalResponse);
+      const finalResponse = this.responseInterceptor.onResponse
+        ? await this.responseInterceptor.onResponse(response as Response)
+        : (response as Response);
+
+      if (!finalResponse.ok) {
+        throw new HttpError(
+          `Network Error: ${finalResponse.status}`,
+          finalResponse,
+        );
+      }
+
+      return await finalResponse.json();
     } catch (error: unknown) {
-      if (error instanceof Response && this.responseInterceptor.onError) {
+      if (error instanceof HttpError && this.responseInterceptor.onError) {
         return await this.responseInterceptor.onError({
-          error,
+          response: error.response,
           originalRequest: updatedConfig,
         });
       }
 
       throw error;
-    } finally {
-      clearTimeout(timeoutId);
     }
   }
 
