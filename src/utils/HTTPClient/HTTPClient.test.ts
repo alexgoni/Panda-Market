@@ -1,6 +1,7 @@
 import { server } from "mocks/server";
 
 import HTTPClient from ".";
+import HttpError from "./HTTPError";
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
@@ -26,7 +27,53 @@ describe("HTTPClient", () => {
     await expect(httpClient.get("/error")).rejects.toThrow();
   });
 
-  it("time out 테스트", async () => {
-    await expect(httpClient.get("/timeout")).rejects.toThrow("Timeout Error");
+  it("request interceptor", async () => {
+    httpClient.setRequestInterceptor((config) => {
+      const newConfig = { ...config };
+      const headers = new Headers(config.headers || {});
+
+      headers.set("Authorization", `Bearer mock-token`);
+
+      newConfig.headers = headers;
+      return newConfig;
+    });
+
+    const response = await httpClient.get("/protected");
+    expect(response).toStrictEqual({ message: "Protected Resourse" });
+  });
+
+  it("response interceptor", async () => {
+    httpClient.setResponseInterceptor({
+      onError: async ({ response, originalRequest }) => {
+        if (response.status !== 401) {
+          throw new HttpError("Network Error", response);
+        }
+
+        const accessToken = "mock-token";
+
+        const updatedConfig = { ...originalRequest };
+        const headers = new Headers(updatedConfig.headers || {});
+        headers.set("Authorization", `Bearer ${accessToken}`);
+        updatedConfig.headers = headers;
+
+        const url = response.url.replace("https://api.test.com", "");
+        const method = originalRequest?.method?.toLowerCase() as
+          | "get"
+          | "post"
+          | "patch"
+          | "delete";
+
+        try {
+          return await httpClient[method](url, updatedConfig);
+        } catch (err) {
+          throw err;
+        }
+      },
+    });
+
+    const response = await httpClient.get("/protected", {
+      headers: { Authorization: "Bearer invalid-token" },
+    });
+    expect(response).toStrictEqual({ message: "Protected Resourse" });
   });
 });

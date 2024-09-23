@@ -50,14 +50,7 @@ export default class HTTPClient {
   private async request<T>(url: string, config: RequestInit): Promise<T> {
     const controller = new AbortController();
     const { signal } = controller;
-
-    const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => {
-        controller.abort();
-        reject(new Error("Timeout Error"));
-      }, this.timeout);
-    });
-
+    const timeoutId = setTimeout(() => controller.abort(), this.timeout);
     let updatedConfig = { ...config };
 
     try {
@@ -65,16 +58,14 @@ export default class HTTPClient {
         updatedConfig = this.requestInterceptor.onRequest(updatedConfig);
       }
 
-      const fetchPromise = fetch(`${this.baseUrl}${url}`, {
+      const response = await fetch(`${this.baseUrl}${url}`, {
         ...updatedConfig,
         signal,
       });
 
-      const response = await Promise.race([fetchPromise, timeoutPromise]);
-
       const finalResponse = this.responseInterceptor.onResponse
-        ? await this.responseInterceptor.onResponse(response as Response)
-        : (response as Response);
+        ? await this.responseInterceptor.onResponse(response)
+        : response;
 
       if (!finalResponse.ok) {
         throw new HttpError(
@@ -93,6 +84,8 @@ export default class HTTPClient {
       }
 
       throw error;
+    } finally {
+      clearTimeout(timeoutId);
     }
   }
 

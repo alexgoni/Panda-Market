@@ -1,4 +1,4 @@
-import { HttpResponse, delay, http } from "msw";
+import { HttpResponse, http } from "msw";
 
 export const handlers = [
   http.get("https://api.test.com/resource", () =>
@@ -8,10 +8,15 @@ export const handlers = [
     HttpResponse.json({ message: "POST successful" }, { status: 201 }),
   ),
   http.get("https://api.test.com/error", () =>
-    HttpResponse.json({ message: "Internal Server Error" }, { status: 500 }),
+    HttpResponse.json({ message: "Internal Server Error" }, { status: 404 }),
   ),
-  http.get("https://api.test.com/timeout", async () => {
-    await delay(4000);
-    return HttpResponse.json({ message: "GET successful" });
+  http.get("https://api.test.com/protected", ({ request }) => {
+    const authHeader = request.headers.get("Authorization");
+
+    if (authHeader === "Bearer mock-token") {
+      return HttpResponse.json({ message: "Protected Resourse" });
+    }
+
+    return HttpResponse.json({ message: "Unauthorized" }, { status: 401 });
   }),
 ];

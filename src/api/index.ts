@@ -1,4 +1,5 @@
 import HTTPClient from "utils/HTTPClient";
+import HttpError from "utils/HTTPClient/HTTPError";
 import { getCookie, setCookie } from "utils/cookie";
 
 // eslint-disable-next-line import/no-cycle
@@ -19,7 +20,7 @@ httpClient.setRequestInterceptor((config) => {
 
 httpClient.setResponseInterceptor({
   onError: async ({ response, originalRequest }) => {
-    if (response.status !== 401) throw new Error("Unauthorized error");
+    if (response.status !== 401) throw new HttpError("Network Error", response);
 
     const refreshToken = getCookie("refreshToken");
     if (!refreshToken) throw new Error("No refresh token available");
