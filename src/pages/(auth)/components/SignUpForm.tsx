@@ -1,11 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
 import { postSignUp } from "api/auth";
+import { ReactComponent as HomeIcon } from "assets/icons/ic_home.svg";
 import classNames from "classnames/bind";
 import Button from "components/Button";
 import Form from "components/Form";
 import Input from "components/Input";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import HttpError from "utils/HTTPClient/HTTPError";
 import { setCookie } from "utils/cookie";
 import { ACCESS_TOKEN_TIME, REFRESH_TOKEN_TIME } from "utils/variables";
@@ -66,6 +67,9 @@ export default function SignUpForm() {
     <div className={cx("form-container")}>
       <h1>SIGN UP</h1>
       <span className={cx("subtitle")}>thank you for joining us!</span>
+      <Link to="/" className={cx("home-icon")}>
+        <HomeIcon fill="#4b5563" width={24} height={24} />
+      </Link>
 
       <Form onSubmit={handleSubmit}>
         <label htmlFor="email">이메일</label>
@@ -111,6 +115,10 @@ export default function SignUpForm() {
           onChange={handleChange}
           required
         />
+
+        <span className={cx("link-block")}>
+          이미 회원이신가요? <Link to="/login">로그인</Link>
+        </span>
 
         <Button type="submit" width="100%" height="40px" round>
           회원가입

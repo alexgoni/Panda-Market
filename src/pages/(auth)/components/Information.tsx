@@ -1,3 +1,4 @@
+import { ReactComponent as HomeIcon } from "assets/icons/ic_home.svg";
 import classNames from "classnames/bind";
 import { Link, useLocation } from "react-router-dom";
 
@@ -10,6 +11,10 @@ export default function Information() {
 
   return (
     <div className={cx("information-container")}>
+      <Link to="/" className={cx("home-icon")}>
+        <HomeIcon fill="white" width={24} height={24} />
+      </Link>
+
       {pathname === "/login" ? <LoginInformation /> : <SignUpInformation />}
     </div>
   );

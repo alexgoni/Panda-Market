@@ -11,9 +11,13 @@
   box-shadow: 0 5px 15px rgba(255, 255, 255, 0.35);
   overflow: hidden;
   position: relative;
-  min-width: 720px;
+  min-width: 360px;
   background-color: white;
   border-radius: 24px;
+
+  @media (min-width: 768px) {
+    min-width: 720px;
+  }
 
   &.login {
     height: 480px;
@@ -31,6 +35,7 @@
   flex: 1;
   flex-direction: column;
   padding: 32px 20px;
+  position: relative;
 
   h1 {
     margin-top: 20px;
@@ -49,6 +54,15 @@
     text-align: center;
   }
 
+  .home-icon {
+    position: absolute;
+    top: 16px;
+
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
+
   form {
     display: flex;
     flex-grow: 1;
@@ -65,6 +79,22 @@
       }
     }
 
+    .link-block {
+      display: block;
+      margin-top: 12px;
+      font-size: 14px;
+      text-align: center;
+
+      @media (min-width: 768px) {
+        display: none;
+      }
+
+      a {
+        color: var(--blue);
+        text-decoration: underline;
+      }
+    }
+
     button[type="submit"] {
       margin-top: auto;
     }
@@ -74,13 +104,23 @@
 /* Information */
 
 .information-container {
-  display: flex;
+  display: none;
   flex: 1;
   flex-direction: column;
   padding: 20px;
+  position: relative;
   background-color: var(--blue);
   color: white;
   text-align: center;
+
+  @media (min-width: 768px) {
+    display: flex;
+  }
+
+  .home-icon {
+    position: absolute;
+    top: 16px;
+  }
 
   h1 {
     margin-top: 100px;
