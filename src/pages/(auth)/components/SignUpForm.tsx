@@ -5,6 +5,7 @@ import classNames from "classnames/bind";
 import Button from "components/Button";
 import Form from "components/Form";
 import Input from "components/Input";
+import { useUserContext } from "context/user";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import HttpError from "utils/HTTPClient/HTTPError";
@@ -23,6 +24,7 @@ export default function SignUpForm() {
     passwordConfirmation: "",
   });
   const navigate = useNavigate();
+  const { setUserInfo } = useUserContext();
   const mutation = useMutation({
     mutationFn: postSignUp,
     onSuccess: (response) => {
@@ -38,6 +40,7 @@ export default function SignUpForm() {
         value: response.refreshToken,
         time: REFRESH_TOKEN_TIME,
       });
+      setUserInfo(response.user);
     },
     onError: async (error: HttpError) => {
       if (error.response) {

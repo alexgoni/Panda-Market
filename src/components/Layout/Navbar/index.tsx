@@ -2,13 +2,19 @@ import mainLogo from "assets/icons/ic_main_logo.svg";
 import mobileMainLogo from "assets/icons/ic_main_logo_mobile.svg";
 import classNames from "classnames/bind";
 import Button from "components/Button";
+import Profile from "components/Profile";
+import { useUserContext } from "context/user";
 import { NavLink } from "react-router-dom";
+import { getCookie } from "utils/cookie";
 
 import styles from "./Navbar.module.scss";
 
 const cx = classNames.bind(styles);
 
 export default function Navbar() {
+  const isLogin = !!getCookie("refreshToken");
+  const { userInfo } = useUserContext();
+
   return (
     <nav className={cx("navbar")}>
       <NavLink to="/">
@@ -34,9 +40,13 @@ export default function Navbar() {
         </NavLink>
       </div>
 
-      <NavLink to="/login">
-        <Button type="button">로그인</Button>
-      </NavLink>
+      {isLogin ? (
+        <Profile name="alexgoni" image={userInfo?.image} />
+      ) : (
+        <NavLink to="/login">
+          <Button type="button">로그인</Button>
+        </NavLink>
+      )}
     </nav>
   );
 }

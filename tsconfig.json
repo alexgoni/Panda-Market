@@ -22,7 +22,8 @@
       "assets/*": ["assets/*"],
       "hooks/*": ["hooks/*"],
       "utils/*": ["utils/*"],
-      "api/*": ["api/*"]
+      "api/*": ["api/*"],
+      "context/*": ["context/*"]
     }
   },
   "include": ["src", "@types"],

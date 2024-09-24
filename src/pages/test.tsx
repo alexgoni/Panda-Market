@@ -7,6 +7,7 @@ import Footer from "components/Layout/Footer";
 import MainLayout from "components/Layout/MainLayout";
 import Navbar from "components/Layout/Navbar";
 import Pagination from "components/Pagination";
+import Profile from "components/Profile";
 import Textarea from "components/Textarea";
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from "react";
 
@@ -172,6 +173,8 @@ export default function Test() {
             required
           />
         </Form>
+
+        <Profile name="ㅇ" />
       </MainLayout>
       <Footer />
     </>
