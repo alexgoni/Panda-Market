@@ -23,7 +23,9 @@ httpClient.setResponseInterceptor({
     if (response.status !== 401) throw new HttpError("Network Error", response);
 
     const refreshToken = getCookie("refreshToken");
-    if (!refreshToken) throw new Error("No refresh token available");
+    if (!refreshToken) {
+      throw new HttpError("No refresh token available", response);
+    }
 
     const url = response.url.replace(
       process.env.REACT_APP_BASE_URL as string,
