@@ -1,19 +1,35 @@
+import { useQuery } from "@tanstack/react-query";
+import { getMyInfo } from "api/user";
 import mainLogo from "assets/icons/ic_main_logo.svg";
 import mobileMainLogo from "assets/icons/ic_main_logo_mobile.svg";
 import classNames from "classnames/bind";
 import Button from "components/Button";
+import Popover from "components/Popover";
 import Profile from "components/Profile";
 import { useUserContext } from "context/user";
+import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { getCookie } from "utils/cookie";
+import { ACCESS_TOKEN_TIME } from "utils/variables";
 
 import styles from "./Navbar.module.scss";
 
 const cx = classNames.bind(styles);
 
 export default function Navbar() {
-  const isLogin = !!getCookie("refreshToken");
-  const { userInfo } = useUserContext();
+  const refreshToken = getCookie("refreshToken");
+  const { userInfo, setUserInfo } = useUserContext();
+  const { data } = useQuery({
+    queryKey: ["my-info"],
+    queryFn: getMyInfo,
+    enabled: !userInfo && !!refreshToken,
+    staleTime: ACCESS_TOKEN_TIME,
+  });
+
+  useEffect(() => {
+    if (userInfo) return;
+    if (data) setUserInfo(data);
+  }, [data, userInfo]);
 
   return (
     <nav className={cx("navbar")}>
@@ -40,8 +56,19 @@ export default function Navbar() {
         </NavLink>
       </div>
 
-      {isLogin ? (
-        <Profile name="alexgoni" image={userInfo?.image} />
+      {refreshToken && userInfo ? (
+        <Popover.Root>
+          <Popover.Trigger>
+            <Profile name={userInfo.nickname} image={userInfo.image} />
+          </Popover.Trigger>
+
+          <Popover.Content position="right" top={12}>
+            <ul className={cx("popover-content")}>
+              <li>마이페이지</li>
+              <li>로그아웃</li>
+            </ul>
+          </Popover.Content>
+        </Popover.Root>
       ) : (
         <NavLink to="/login">
           <Button type="button">로그인</Button>

@@ -4,9 +4,15 @@ import UserProvider from "context/user";
 
 import Router from "./Router";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      throwOnError: true,
+    },
+  },
+});
 
-function App() {
+export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <UserProvider>
@@ -16,5 +22,3 @@ function App() {
     </QueryClientProvider>
   );
 }
-
-export default App;

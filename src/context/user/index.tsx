@@ -10,7 +10,7 @@ import {
 
 interface UserInfo {
   id: number;
-  email: string;
+  email?: string;
   image: string | null;
   nickname: string;
   updatedAt: string;
