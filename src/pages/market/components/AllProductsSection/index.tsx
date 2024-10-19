@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 
-import styles from "../Market.module.scss";
+import styles from "../../Market.module.scss";
 
 const cx = classNames.bind(styles);
 

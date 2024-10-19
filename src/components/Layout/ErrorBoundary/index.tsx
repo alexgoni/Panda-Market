@@ -1,11 +1,7 @@
-import { Component, ComponentType, ErrorInfo, PropsWithChildren } from "react";
-
-export interface ErrorFallbackProps {
-  error: Error;
-}
+import { Component, ErrorInfo, PropsWithChildren, ReactNode } from "react";
 
 interface ErrorBoundaryProps extends PropsWithChildren {
-  fallback: ComponentType<ErrorFallbackProps>;
+  fallback: ReactNode;
 }
 
 interface ErrorBoundaryState {
@@ -31,11 +27,11 @@ export default class ErrorBoundary extends Component<
   }
 
   render() {
-    const { fallback: FallbackComponent, children } = this.props;
+    const { fallback, children } = this.props;
     const { error } = this.state;
 
     if (!error) return children;
 
-    return <FallbackComponent error={error} />;
+    return fallback;
   }
 }

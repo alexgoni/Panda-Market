@@ -9,7 +9,7 @@ describe("ErrorBoundary Component", () => {
     }
 
     render(
-      <ErrorBoundary fallback={ErrorFallback}>
+      <ErrorBoundary fallback={<ErrorFallback />}>
         <GoodComponent />
       </ErrorBoundary>,
     );
@@ -29,7 +29,7 @@ describe("ErrorBoundary Component", () => {
     }
 
     render(
-      <ErrorBoundary fallback={ErrorFallback}>
+      <ErrorBoundary fallback={<ErrorFallback />}>
         <BadComponent />
       </ErrorBoundary>,
     );

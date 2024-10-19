@@ -3,7 +3,7 @@ import orderByIcon from "assets/icons/ic_order_by.svg";
 import classNames from "classnames/bind";
 import Dropdown from "components/Dropdown";
 
-import styles from "../Market.module.scss";
+import styles from "../../Market.module.scss";
 
 const cx = classNames.bind(styles);
 

@@ -1,7 +1,8 @@
 import { lazy } from "react";
 
-export const Test = lazy(() => import("./test"));
-export const Landing = lazy(() => import("./landing"));
-export const Market = lazy(() => import("./market"));
-export const Login = lazy(() => import("./(auth)/Login"));
-export const SignUp = lazy(() => import("./(auth)/SignUp"));
+export const TestPage = lazy(() => import("./test"));
+export const LandingPage = lazy(() => import("./landing"));
+export const MarketPage = lazy(() => import("./market"));
+export const LoginPage = lazy(() => import("./(auth)/Login"));
+export const SignUpPage = lazy(() => import("./(auth)/SignUp"));
+export const ProductPage = lazy(() => import("./product"));

@@ -1,3 +1,140 @@
+/* Card */
+
+.card {
+  .thumbnail {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 18px;
+    object-fit: cover;
+  }
+
+  h1 {
+    margin: 12px 0;
+    font-weight: 500;
+  }
+
+  .price {
+    display: block;
+    margin: 6px 0;
+    font-weight: 700;
+  }
+
+  .favorite-count {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    font-size: 12px;
+    color: var(--gray-700);
+  }
+}
+
+.card-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .thumbnail {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: var(--gray-200);
+    border-radius: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .title,
+  .price,
+  .favorite-count {
+    background-color: var(--gray-200);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .title {
+    width: 70%;
+    height: 20px;
+  }
+
+  .price {
+    width: 50%;
+    height: 16px;
+  }
+
+  .favorite-count {
+    width: 40%;
+    height: 12px;
+  }
+
+  .thumbnail::after,
+  .title::after,
+  .price::after,
+  .favorite-count::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(255, 255, 255, 0.5) 50%,
+      transparent 100%
+    );
+    transform: translateX(-100%);
+    animation: shimmer 2s infinite;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* BestProductsSection */
+
+.best-products-title {
+  margin-top: 24px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 32px;
+}
+
+.best-products-container {
+  display: grid;
+  gap: 24px;
+  margin-top: 16px;
+  grid-template-columns: 1fr;
+  min-height: 300px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1280px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.best-products-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (min-width: 768px) {
+    grid-column: span 2;
+  }
+
+  @media (min-width: 768px) {
+    grid-column: span 4;
+  }
+}
+
 /* OrderByDropdown */
 
 .toggle-button {
@@ -7,8 +144,8 @@
   border: 1px solid var(--gray-200);
   width: 42px;
   height: 42px;
-  border-radius: 12px;
   background-color: white;
+  border-radius: 12px;
 
   @media (min-width: 768px) {
     min-width: 130px;
