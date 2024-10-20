@@ -10,7 +10,7 @@ import { useUserContext } from "context/user";
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { getCookie } from "utils/cookie";
-import { ACCESS_TOKEN_TIME } from "utils/variables";
+import { ACCESS_TOKEN_TIME } from "utils/cookie/variables";
 
 import styles from "./Navbar.module.scss";
 

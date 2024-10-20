@@ -10,7 +10,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import HttpError from "utils/HTTPClient/HTTPError";
 import { setCookie } from "utils/cookie";
-import { ACCESS_TOKEN_TIME, REFRESH_TOKEN_TIME } from "utils/variables";
+import { ACCESS_TOKEN_TIME, REFRESH_TOKEN_TIME } from "utils/cookie/variables";
 
 import styles from "../Auth.module.scss";
 

@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import {
+  AddItemPage,
   LandingPage,
   LoginPage,
   MarketPage,
@@ -21,6 +22,7 @@ export default function Router() {
           <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="/market" element={<MarketPage />} />
           <Route path="/product/:id" element={<ProductPage />} />
+          <Route path="/add-item" element={<AddItemPage />} />
         </Routes>
       </BrowserRouter>
     </Suspense>

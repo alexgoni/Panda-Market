@@ -8,11 +8,14 @@ import styles from "../../Market.module.scss";
 const cx = classNames.bind(styles);
 
 interface Props {
-  orderBy: string;
-  handleOrderChange: (newOrder: string) => void;
+  orderBy: "최신순" | "좋아요순";
+  onOrderChange: (newOrder: "최신순" | "좋아요순") => void;
 }
 
-export default function OrderByDropdown({ orderBy, handleOrderChange }: Props) {
+export default function OrderByDropdown({
+  orderBy,
+  onOrderChange: handleOrderChange,
+}: Props) {
   return (
     <Dropdown.Root>
       <Dropdown.Trigger>
@@ -39,20 +42,20 @@ export default function OrderByDropdown({ orderBy, handleOrderChange }: Props) {
         )}
       </Dropdown.Trigger>
 
-      <Dropdown.List width="300px" position="right">
+      <Dropdown.List position="right" width="130px">
         <Dropdown.Option
           onClick={() => {
             handleOrderChange("최신순");
           }}
         >
-          최신순
+          {orderBy === "최신순" && "✅"} 최신순
         </Dropdown.Option>
         <Dropdown.Option
           onClick={() => {
             handleOrderChange("좋아요순");
           }}
         >
-          좋아요순
+          {orderBy === "좋아요순" && "✅"}좋아요순
         </Dropdown.Option>
       </Dropdown.List>
     </Dropdown.Root>

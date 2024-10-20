@@ -18,8 +18,8 @@ export default function Loading() {
 }
 
 function getPageSize(deviceState: Device | null) {
-  if (deviceState === Device.Mobile) return 1;
-  if (deviceState === Device.Tablet) return 2;
-  if (deviceState === Device.PC) return 4;
+  if (deviceState === Device.Mobile) return 4;
+  if (deviceState === Device.Tablet) return 6;
+  if (deviceState === Device.PC) return 10;
   return 4;
 }
