@@ -1,4 +1,3 @@
-import ProductPage from "pages/product";
 import { Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -7,6 +6,7 @@ import {
   LandingPage,
   LoginPage,
   MarketPage,
+  ProductPage,
   SignUpPage,
   TestPage,
 } from "./pages";
