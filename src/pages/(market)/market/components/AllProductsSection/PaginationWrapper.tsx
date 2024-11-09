@@ -29,6 +29,7 @@ export default function PaginationWrapper() {
   return (
     <div className={cx("pagination-wrapper")}>
       <Pagination
+        currentPage={Number(searchParams.get("page")) ?? 1}
         totalPages={marketPage.totalPage}
         onPageChange={hanlePageChange}
       />

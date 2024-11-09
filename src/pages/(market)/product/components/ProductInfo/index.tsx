@@ -49,7 +49,6 @@ export default function ProductInfo() {
           </div>
         </div>
 
-        {/* 올린 사람 추가 */}
         <LikeButton productId={Number(id)} favoriteCount={data.favoriteCount} />
       </div>
     </div>

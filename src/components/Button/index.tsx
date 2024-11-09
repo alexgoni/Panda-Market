@@ -8,6 +8,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   round?: boolean;
   width?: string;
   height?: string;
+  className?: string;
 }
 
 const cx = classNames.bind(styles);
@@ -19,9 +20,10 @@ export default function Button({
   disabled = false,
   width,
   height,
+  className,
   onClick,
 }: Props) {
-  const classnames = cx("button", {
+  const classnames = cx("button", className, {
     round,
   });
 

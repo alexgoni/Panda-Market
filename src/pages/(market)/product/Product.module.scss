@@ -124,12 +124,12 @@
   margin-top: 24px;
   padding: 4px 12px;
   border: 1px solid var(--gray-200);
+  width: max-content;
   background-color: white;
   font-size: 16px;
   font-weight: 500;
   color: var(--gray-500);
   border-radius: 35px;
-  width: max-content;
 
   &:focus,
   &:hover {
@@ -138,5 +138,102 @@
 
   @media (min-width: 768px) {
     margin-top: 15px;
+  }
+}
+
+/* CommentSection */
+
+.comment-section-container {
+  margin-top: 16px;
+  margin-bottom: 200px;
+  position: relative;
+
+  @media (min-width: 768px) {
+    margin-top: 24x;
+  }
+
+  .title {
+    margin-bottom: 16px;
+    font-weight: 600;
+    color: var(--gray-800);
+  }
+
+  .submit-btn {
+    display: block;
+    margin-top: 16px;
+    margin-left: auto;
+  }
+
+  .comment-list-container {
+    display: flex;
+    gap: 24px;
+    flex-direction: column;
+    margin-top: 16px;
+    margin-bottom: 120px;
+
+    @media (min-width: 768px) {
+      margin-top: 24px;
+    }
+  }
+
+  .empty-comment-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    img {
+      width: 200px;
+      height: 200px;
+    }
+
+    span {
+      font-weight: 400;
+      line-height: 24px;
+      color: var(--gray-400);
+    }
+  }
+}
+
+/* Comment */
+
+.comment-container {
+  border-bottom: 1px solid var(--gray-200);
+
+  .content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    span {
+      font-weight: 400;
+      color: var(--gray-800);
+    }
+  }
+
+  .profile-img-container {
+    display: grid;
+    margin: 24px 0;
+    width: max-content;
+    grid-template-columns: repeat(2, auto);
+    grid-template-rows: repeat(2, 1fr);
+    column-gap: 8px;
+
+    div:first-child {
+      grid-row: 1 / span 2;
+    }
+
+    .username {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--gray-600);
+    }
+
+    .updated-time {
+      align-self: self-end;
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--gray-400);
+    }
   }
 }
