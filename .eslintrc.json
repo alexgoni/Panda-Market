@@ -31,25 +31,13 @@
     "import/prefer-default-export": "off",
     "@typescript-eslint/lines-between-class-members": "off",
     "no-alert": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "import/no-extraneous-dependencies": "off",
     "jsx-a11y/label-has-associated-control": [
       "error",
       {
         "labelAttributes": ["htmlFor"]
       }
     ]
-  },
-  "overrides": [
-    {
-      "files": ["*.tsx", "*.jsx"],
-      "rules": {
-        "@typescript-eslint/no-use-before-define": "off"
-      }
-    },
-    {
-      "files": ["src/api/**/*.ts", "src/api/**/*.js"],
-      "rules": {
-        "no-console": "off"
-      }
-    }
-  ]
+  }
 }
