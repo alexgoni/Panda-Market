@@ -1,12 +1,13 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getProductDetail } from "api/product";
-import kebabIcon from "assets/icons/ic_kebab.svg";
 import classNames from "classnames/bind";
+import { useUserContext } from "context/user";
 import { useParams } from "react-router-dom";
 
 import styles from "../../Product.module.scss";
 import LikeButton from "./LikeButton";
 import Tag from "./Tag";
+import UpdateButton from "./UpdateButton";
 
 const cx = classNames.bind(styles);
 
@@ -14,6 +15,7 @@ const cx = classNames.bind(styles);
 
 export default function ProductInfo() {
   const { id } = useParams();
+  const { userInfo } = useUserContext();
 
   const { data } = useSuspenseQuery({
     queryKey: ["product", id],
@@ -34,7 +36,7 @@ export default function ProductInfo() {
       <div className={cx("info-wrapper")}>
         <div className={cx("top-content")}>
           <h1>{data.name}</h1>
-          <img src={kebabIcon} alt="kebab" />
+          {data.ownerId === userInfo?.id ? <UpdateButton /> : <div />}
           <span>{data.price.toLocaleString()}원</span>
         </div>
 
