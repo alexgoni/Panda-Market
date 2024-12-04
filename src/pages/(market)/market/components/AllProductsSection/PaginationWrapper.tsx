@@ -1,7 +1,6 @@
 import classNames from "classnames/bind";
 import Pagination from "components/Pagination";
 import { useAtomValue } from "jotai";
-import { startTransition } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import styles from "../../Market.module.scss";
@@ -14,11 +13,9 @@ export default function PaginationWrapper() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const hanlePageChange = (page: number) => {
-    startTransition(() => {
-      setSearchParams({
-        ...Object.fromEntries(searchParams),
-        page: String(page),
-      });
+    setSearchParams({
+      ...Object.fromEntries(searchParams),
+      page: String(page),
     });
   };
 

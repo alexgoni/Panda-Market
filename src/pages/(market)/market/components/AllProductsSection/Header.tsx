@@ -1,27 +1,25 @@
 import classNames from "classnames/bind";
 import Button from "components/Button";
 import Input from "components/Input";
-import { useAtom } from "jotai";
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 
 import styles from "../../Market.module.scss";
 import OrderByDropdown from "./OrderByDropdown";
-import marketKeywordAtom from "./context/keyword";
-import marketOrderByAtom from "./context/orderBy";
 
 const cx = classNames.bind(styles);
 
 export default function Header() {
-  const [keyword, setKeyword] = useAtom(marketKeywordAtom);
-  const [orderBy, setOrderBy] = useAtom(marketOrderByAtom);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [keyword, setKeyword] = useState(searchParams.get("keyword") || "");
+  const [orderBy, setOrderBy] = useState<"최신순" | "좋아요순">(
+    searchParams.get("orderBy") === "favorite" ? "좋아요순" : "최신순",
+  );
 
   const handleKeywordChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newKeyword = e.target.value;
 
     setKeyword(newKeyword);
-
     setSearchParams({
       ...Object.fromEntries(searchParams),
       page: "1",
@@ -38,19 +36,6 @@ export default function Header() {
       orderBy: orderByInEnglish,
     });
   };
-
-  // searchParams 기반 state 초기화
-  useEffect(() => {
-    const newKeyword = searchParams.get("keyword");
-    const newOrderBy = searchParams.get("orderBy");
-
-    if (newKeyword !== null) setKeyword(newKeyword);
-
-    if (newOrderBy !== null) {
-      const orderByInKorean = newOrderBy === "recent" ? "최신순" : "좋아요순";
-      setOrderBy(orderByInKorean);
-    }
-  }, []);
 
   return (
     <div className={cx("all-products-header")}>
