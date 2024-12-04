@@ -43,12 +43,6 @@ export default function Navbar() {
       </NavLink>
       <div className={cx("menus")}>
         <NavLink
-          to="/board"
-          className={({ isActive }) => (isActive ? cx("active") : "")}
-        >
-          자유게시판
-        </NavLink>
-        <NavLink
           to="/market"
           className={({ isActive }) => (isActive ? cx("active") : "")}
         >

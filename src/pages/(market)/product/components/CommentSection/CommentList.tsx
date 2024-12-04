@@ -19,7 +19,7 @@ export default function CommentList() {
     queryKey: ["comments", id],
     queryFn: () => {
       if (!id) throw new Error("해당 상품이 존재하지 않습니다.");
-      return getProductComments({ productId: Number(id), limit: 5 });
+      return getProductComments({ productId: Number(id), limit: 20 });
     },
   });
 

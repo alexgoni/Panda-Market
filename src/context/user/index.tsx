@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 
-interface UserInfo {
+export interface UserInfo {
   id: number;
   email?: string;
   image: string | null;

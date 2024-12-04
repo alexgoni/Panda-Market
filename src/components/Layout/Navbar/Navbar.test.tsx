@@ -14,11 +14,7 @@ describe("Navbar component", () => {
         </UserProvider>
       </Router>,
     );
-    const boardLink = screen.getByText("자유게시판");
     const marketLink = screen.getByText("중고마켓");
-
-    expect(boardLink).toBeInTheDocument();
-    expect(boardLink).toHaveAttribute("href", "/board");
 
     expect(marketLink).toBeInTheDocument();
     expect(marketLink).toHaveAttribute("href", "/market");
