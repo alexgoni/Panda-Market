@@ -9,6 +9,7 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       throwOnError: true,
+      retry: false,
     },
   },
 });

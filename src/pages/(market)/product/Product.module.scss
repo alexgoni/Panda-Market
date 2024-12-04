@@ -271,3 +271,12 @@
     }
   }
 }
+
+/* Error */
+
+.error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 76px - 120px);
+}

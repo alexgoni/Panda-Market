@@ -1,21 +1,21 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getProducts } from "api/product";
 import deviceStateAtom, { Device } from "context/deviceState";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import debounce from "utils/debounce";
 
 import marketKeywordAtom from "../context/keyword";
 import marketOrderByAtom from "../context/orderBy";
-import marketPageAtom from "../context/page";
+import totalPageAtom from "../context/page";
 
 export default function useGetAllProducts() {
   const deviceState = useAtomValue(deviceStateAtom);
-  const [marketPage, setMarketPage] = useAtom(marketPageAtom);
+  const setTotalPage = useSetAtom(totalPageAtom);
   const orderBy = useAtomValue(marketOrderByAtom);
   const keyword = useAtomValue(marketKeywordAtom);
-  const [debouncedKeyword, setDebouncedKeyword] = useState(keyword);
+  // const [debouncedKeyword, setDebouncedKeyword] = useState(keyword);
   const [searchParams, setSearchParams] = useSearchParams();
   const pageSize = getPageSize(deviceState);
 
@@ -24,16 +24,16 @@ export default function useGetAllProducts() {
       "all-products",
       {
         deviceState,
-        page: marketPage.currentPage,
-        keyword: debouncedKeyword,
+        page: searchParams.get("page"),
+        keyword,
         orderBy,
       },
     ],
     queryFn: () =>
       getProducts({
         pageSize,
-        page: marketPage.currentPage || 1,
-        keyword: debouncedKeyword,
+        page: Number(searchParams.get("page")) || 1,
+        keyword,
         orderBy: orderBy === "최신순" ? "recent" : "favorite",
       }),
   });
@@ -46,19 +46,16 @@ export default function useGetAllProducts() {
   }, [deviceState]);
 
   useEffect(() => {
-    setMarketPage((prev) => ({
-      ...prev,
-      totalPage: Math.ceil(data.totalCount / pageSize),
-    }));
+    setTotalPage(Math.ceil(data.totalCount / pageSize));
   }, [data]);
 
-  useEffect(() => {
-    const debouncedSetKeyword = debounce((newKeyword: string) => {
-      setDebouncedKeyword(newKeyword);
-    }, 300);
+  // useEffect(() => {
+  //   const debouncedSetKeyword = debounce((newKeyword: string) => {
+  //     setDebouncedKeyword(newKeyword);
+  //   }, 300);
 
-    debouncedSetKeyword(keyword);
-  }, [keyword]);
+  //   debouncedSetKeyword(keyword);
+  // }, [keyword]);
 
   return data;
 }

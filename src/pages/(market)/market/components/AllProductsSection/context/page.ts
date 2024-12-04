@@ -1,10 +1,5 @@
 import { atom } from "jotai";
 
-interface AtomType {
-  totalPage: number | null;
-  currentPage: number | null;
-}
+const totalPageAtom = atom<number | null>(null);
 
-const marketPageAtom = atom<AtomType>({ totalPage: null, currentPage: null });
-
-export default marketPageAtom;
+export default totalPageAtom;

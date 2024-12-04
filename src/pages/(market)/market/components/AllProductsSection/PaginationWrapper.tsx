@@ -1,36 +1,34 @@
 import classNames from "classnames/bind";
 import Pagination from "components/Pagination";
-import { useAtom } from "jotai";
+import { useAtomValue } from "jotai";
+import { startTransition } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import styles from "../../Market.module.scss";
-import marketPageAtom from "./context/page";
+import totalPageAtom from "./context/page";
 
 const cx = classNames.bind(styles);
 
 export default function PaginationWrapper() {
-  const [marketPage, setMarketPage] = useAtom(marketPageAtom);
+  const totalPage = useAtomValue(totalPageAtom);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const hanlePageChange = (page: number) => {
-    setMarketPage((prev) => ({
-      ...prev,
-      currentPage: page,
-    }));
-
-    setSearchParams({
-      ...Object.fromEntries(searchParams),
-      page: String(page),
+    startTransition(() => {
+      setSearchParams({
+        ...Object.fromEntries(searchParams),
+        page: String(page),
+      });
     });
   };
 
-  if (!marketPage.totalPage) return null;
+  if (!totalPage) return null;
 
   return (
     <div className={cx("pagination-wrapper")}>
       <Pagination
         currentPage={Number(searchParams.get("page")) ?? 1}
-        totalPages={marketPage.totalPage}
+        totalPages={totalPage}
         onPageChange={hanlePageChange}
       />
     </div>

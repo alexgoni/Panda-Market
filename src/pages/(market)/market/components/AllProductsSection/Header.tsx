@@ -1,7 +1,7 @@
 import classNames from "classnames/bind";
 import Button from "components/Button";
 import Input from "components/Input";
-import { useAtom, useSetAtom } from "jotai";
+import { useAtom } from "jotai";
 import { ChangeEvent, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 
@@ -9,14 +9,12 @@ import styles from "../../Market.module.scss";
 import OrderByDropdown from "./OrderByDropdown";
 import marketKeywordAtom from "./context/keyword";
 import marketOrderByAtom from "./context/orderBy";
-import marketPageAtom from "./context/page";
 
 const cx = classNames.bind(styles);
 
 export default function Header() {
   const [keyword, setKeyword] = useAtom(marketKeywordAtom);
   const [orderBy, setOrderBy] = useAtom(marketOrderByAtom);
-  const setMarketPage = useSetAtom(marketPageAtom);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleKeywordChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -26,13 +24,9 @@ export default function Header() {
 
     setSearchParams({
       ...Object.fromEntries(searchParams),
+      page: "1",
       keyword: newKeyword,
     });
-
-    setMarketPage((prev) => ({
-      ...prev,
-      currentPage: 1,
-    }));
   };
 
   const handleOrderChange = (newOrder: "최신순" | "좋아요순") => {

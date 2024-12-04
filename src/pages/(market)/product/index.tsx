@@ -5,6 +5,7 @@ import Navbar from "components/Layout/Navbar";
 import { Suspense } from "react";
 
 import CommentSection from "./components/CommentSection";
+import Error from "./components/Error";
 import ProductInfo from "./components/ProductInfo";
 
 export default function ProductPage() {
@@ -12,13 +13,11 @@ export default function ProductPage() {
     <>
       <Navbar />
       <MainLayout>
-        <ErrorBoundary fallback={<>asdf</>}>
+        <ErrorBoundary fallback={<Error />}>
           <Suspense>
             <ProductInfo />
           </Suspense>
-          <Suspense>
-            <CommentSection />
-          </Suspense>
+          <CommentSection />
         </ErrorBoundary>
       </MainLayout>
       <Footer />

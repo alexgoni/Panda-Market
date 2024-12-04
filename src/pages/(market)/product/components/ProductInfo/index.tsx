@@ -11,7 +11,7 @@ import UpdateButton from "./UpdateButton";
 
 const cx = classNames.bind(styles);
 
-// TODO: 케밥, 낙관적 업데이트, 스켈레톤, 에러 폴백
+// TODO:  케밥
 
 export default function ProductInfo() {
   const { id } = useParams();
@@ -51,7 +51,13 @@ export default function ProductInfo() {
           </div>
         </div>
 
-        <LikeButton productId={Number(id)} favoriteCount={data.favoriteCount} />
+        {userInfo && (
+          <LikeButton
+            productId={Number(id)}
+            favoriteCount={data.favoriteCount}
+            isFavorite={!!data.isFavorite}
+          />
+        )}
       </div>
     </div>
   );
