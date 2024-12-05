@@ -8,6 +8,8 @@ import CommentSection from "./components/CommentSection";
 import Error from "./components/Error";
 import ProductInfo from "./components/ProductInfo";
 
+// TODO: Suspense 폴백
+
 export default function ProductPage() {
   return (
     <>

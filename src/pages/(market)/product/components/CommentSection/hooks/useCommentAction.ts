@@ -1,5 +1,9 @@
 import type { Comment, GetCommentsResponse } from "@panda-market-api";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  InfiniteData,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { deleteComment, postProductComment, updateComment } from "api/comment";
 import type { UserInfo } from "context/user";
 import { useParams } from "react-router-dom";
@@ -51,29 +55,38 @@ export default function useCommentAction<T extends MutationType>(
         queryKey: ["comments", routeParams.id],
       });
 
-      const previousComments = queryClient.getQueryData<GetCommentsResponse>([
+      const previousComments = queryClient.getQueryData([
         "comments",
         routeParams.id,
       ]);
 
       queryClient.setQueryData(
         ["comments", routeParams.id],
-        (old: GetCommentsResponse): GetCommentsResponse => ({
+        (
+          old: InfiniteData<GetCommentsResponse>,
+        ): InfiniteData<GetCommentsResponse> => ({
           ...old,
-          list: [
-            {
-              id: Date.now(),
-              content: createParams.text,
-              createdAt: new Date().toISOString(),
-              updatedAt: new Date().toISOString(),
-              writer: {
-                id: createParams.userInfo.id,
-                nickname: createParams.userInfo.nickname,
-                image: createParams.userInfo.image,
-              },
-            },
-            ...old.list,
-          ],
+          pages: old.pages.map((page, index) =>
+            index === 0
+              ? {
+                  ...page,
+                  list: [
+                    {
+                      id: Date.now(),
+                      content: createParams.text,
+                      createdAt: new Date().toISOString(),
+                      updatedAt: new Date().toISOString(),
+                      writer: {
+                        id: createParams.userInfo.id,
+                        nickname: createParams.userInfo.nickname,
+                        image: createParams.userInfo.image,
+                      },
+                    },
+                    ...page.list,
+                  ],
+                }
+              : page,
+          ),
         }),
       );
 
@@ -112,23 +125,32 @@ export default function useCommentAction<T extends MutationType>(
         queryKey: ["comments", routeParams.id],
       });
 
-      const previousComments = queryClient.getQueryData<GetCommentsResponse>([
+      const previousComments = queryClient.getQueryData([
         "comments",
         routeParams.id,
       ]);
 
       queryClient.setQueryData(
         ["comments", routeParams.id],
-        (old: GetCommentsResponse): GetCommentsResponse => ({
+        (
+          old: InfiniteData<GetCommentsResponse>,
+        ): InfiniteData<GetCommentsResponse> => ({
           ...old,
-          list: old.list.map((comment: Comment) =>
-            comment.id === editParams.commentId
+          pages: old.pages.map((page, index) =>
+            index === 0
               ? {
-                  ...comment,
-                  content: editParams.text,
-                  updatedAt: new Date().toISOString(),
+                  ...page,
+                  list: page.list.map((comment: Comment) =>
+                    comment.id === editParams.commentId
+                      ? {
+                          ...comment,
+                          content: editParams.text,
+                          updatedAt: new Date().toISOString(),
+                        }
+                      : comment,
+                  ),
                 }
-              : comment,
+              : page,
           ),
         }),
       );
@@ -165,16 +187,26 @@ export default function useCommentAction<T extends MutationType>(
         queryKey: ["comments", routeParams.id],
       });
 
-      const previousComments = queryClient.getQueryData<GetCommentsResponse>([
+      const previousComments = queryClient.getQueryData([
         "comments",
         routeParams.id,
       ]);
+
       queryClient.setQueryData(
         ["comments", routeParams.id],
-        (old: GetCommentsResponse): GetCommentsResponse => ({
+        (
+          old: InfiniteData<GetCommentsResponse>,
+        ): InfiniteData<GetCommentsResponse> => ({
           ...old,
-          list: old.list.filter(
-            (comment: Comment) => comment.id !== deleteParams.commentId,
+          pages: old.pages.map((page, index) =>
+            index === 0
+              ? {
+                  ...page,
+                  list: page.list.filter(
+                    (comment: Comment) => comment.id !== deleteParams.commentId,
+                  ),
+                }
+              : page,
           ),
         }),
       );

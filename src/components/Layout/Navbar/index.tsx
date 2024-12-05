@@ -19,7 +19,7 @@ const cx = classNames.bind(styles);
 export default function Navbar() {
   const refreshToken = getCookie("refreshToken");
   const { userInfo, setUserInfo } = useUserContext();
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["my-info"],
     queryFn: getMyInfo,
     enabled: !userInfo && !!refreshToken,
@@ -50,24 +50,25 @@ export default function Navbar() {
         </NavLink>
       </div>
 
-      {refreshToken && userInfo ? (
-        <Popover.Root>
-          <Popover.Trigger>
-            <Profile name={userInfo.nickname} image={userInfo.image} />
-          </Popover.Trigger>
+      {!isLoading &&
+        (refreshToken && userInfo ? (
+          <Popover.Root>
+            <Popover.Trigger>
+              <Profile name={userInfo.nickname} image={userInfo.image} />
+            </Popover.Trigger>
 
-          <Popover.Content position="right" top={12}>
-            <ul className={cx("popover-content")}>
-              <li>마이페이지</li>
-              <li>로그아웃</li>
-            </ul>
-          </Popover.Content>
-        </Popover.Root>
-      ) : (
-        <NavLink to="/login">
-          <Button type="button">로그인</Button>
-        </NavLink>
-      )}
+            <Popover.Content position="right" top={12}>
+              <ul className={cx("popover-content")}>
+                <li>마이페이지</li>
+                <li>로그아웃</li>
+              </ul>
+            </Popover.Content>
+          </Popover.Root>
+        ) : (
+          <NavLink to="/login">
+            <Button type="button">로그인</Button>
+          </NavLink>
+        ))}
     </nav>
   );
 }
