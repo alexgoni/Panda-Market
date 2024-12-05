@@ -15,15 +15,15 @@ const PRIVACY_POLICY_NOTICE =
 
 export default function CommentForm({ userInfo }: { userInfo: UserInfo }) {
   const [text, setText] = useState("");
-  const mutation = useCommentAction({ text, userInfo });
+  const { createMutation } = useCommentAction("create", { text, userInfo });
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    mutation.mutate();
+    createMutation.mutate(undefined, { onSuccess: () => setText("") });
   };
 
   return (

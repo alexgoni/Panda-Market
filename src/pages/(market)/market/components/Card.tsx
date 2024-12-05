@@ -11,7 +11,7 @@ const cx = classNames.bind(styles);
 
 export default function Card({ data }: { data: Product }) {
   const { id, images, price, name, favoriteCount } = data;
-  const [imageSrc, setImageSrc] = useState(images[0]);
+  const [imageSrc, setImageSrc] = useState(images[0] ?? noImage);
 
   const handleImageError = () => {
     setImageSrc(noImage);

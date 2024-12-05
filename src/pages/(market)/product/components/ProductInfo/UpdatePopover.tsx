@@ -6,7 +6,7 @@ import styles from "../../Product.module.scss";
 
 const cx = classNames.bind(styles);
 
-export default function UpdateButton() {
+export default function UpdatePopover() {
   return (
     <Popover.Root>
       <Popover.Trigger>

@@ -202,8 +202,33 @@
 
   .content {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
+
+    form {
+      flex: 1;
+      position: relative;
+
+      .btn-container {
+        position: absolute;
+        top: 150px;
+        right: 0px;
+
+        @media (min-width: 768px) {
+          top: 130px;
+        }
+
+        .edit-cancel-btn {
+          background-color: var(--gray-100);
+          margin-right: 8px;
+          color: black;
+
+          &:hover {
+            background-color: var(--gray-200);
+          }
+        }
+      }
+    }
 
     span {
       font-weight: 400;
@@ -238,7 +263,7 @@
   }
 }
 
-/* UpdateButton */
+/* UpdatePopover */
 
 .popover-content {
   background-color: var(--gray-100);
@@ -248,7 +273,10 @@
 
   li {
     cursor: pointer;
-    padding: 12px 20px;
+
+    button {
+      padding: 12px 20px;
+    }
 
     &:first-child {
       border-bottom: 1px solid var(--gray-200);
@@ -261,7 +289,9 @@
     }
 
     &:last-child {
-      color: var(--red);
+      button {
+        color: var(--red);
+      }
 
       &:hover {
         background-color: var(--gray-50);

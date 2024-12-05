@@ -1,10 +1,13 @@
 import type { Comment as CommentType } from "@panda-market-api";
-import kebabIcon from "assets/icons/ic_kebab.svg";
 import classNames from "classnames/bind";
 import Profile from "components/Profile";
+import { useUserContext } from "context/user";
+import { useState } from "react";
 import { formatTimeAgo } from "utils/date";
 
 import styles from "../../Product.module.scss";
+import EditForm from "./EditForm";
+import UpdatePopover from "./UpdatePopover";
 
 const cx = classNames.bind(styles);
 
@@ -14,16 +17,34 @@ interface Props {
 
 export default function Comment({ data }: Props) {
   const {
+    id,
     content,
     updatedAt,
-    writer: { nickname, image },
+    writer: { id: writerId, nickname, image },
   } = data;
+  const { userInfo } = useUserContext();
+  const [isEditMode, setIsEditMode] = useState(false);
+
+  const handleEditMode = (newEditMode: boolean) => {
+    setIsEditMode(newEditMode);
+  };
 
   return (
     <div className={cx("comment-container")}>
       <div className={cx("content")}>
-        <span>{content}</span>
-        <img src={kebabIcon} alt="kebab" />
+        {!isEditMode ? (
+          <span>{content}</span>
+        ) : (
+          <EditForm
+            commentId={id}
+            initialValue={content}
+            handleEditMode={handleEditMode}
+          />
+        )}
+
+        {userInfo?.id === writerId && !isEditMode && (
+          <UpdatePopover commentId={id} handleEditMode={handleEditMode} />
+        )}
       </div>
 
       <div className={cx("profile-img-container")}>
