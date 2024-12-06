@@ -1,4 +1,3 @@
-import loadingSpinner from "assets/images/loading-spinner.svg";
 import classNames from "classnames/bind";
 import Button from "components/Button";
 import Form from "components/Form";
@@ -31,12 +30,13 @@ export default function EditorForm() {
       onKeyDown={handleFormKeyDown}
     >
       <h1 className={cx("title")}>상품 등록하기</h1>
-      <Button type="submit" height="40px" className={cx("submit-btn")}>
-        {mutation.isPending ? (
-          <span>등록</span>
-        ) : (
-          <img src={loadingSpinner} alt="loading" />
-        )}
+      <Button
+        type="submit"
+        height="40px"
+        disabled={mutation.isPending}
+        className={cx("submit-btn")}
+      >
+        <span>{!mutation.isPending ? "등록" : "등록 중"}</span>
       </Button>
 
       <label htmlFor="image">상품 이미지</label>

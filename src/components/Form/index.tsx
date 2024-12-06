@@ -96,7 +96,9 @@ export default function Form(
       (child.type === Button || child.type === "button") &&
       child.props.type === "submit"
     ) {
-      return cloneElement(child, { disabled: !isFormValid });
+      return cloneElement(child, {
+        disabled: !isFormValid || child.props.disabled,
+      });
     }
     return child;
   });

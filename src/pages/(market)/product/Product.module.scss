@@ -285,24 +285,26 @@
     }
 
     &:first-child {
-      border-bottom: 1px solid var(--gray-200);
+      button {
+        border-bottom: 1px solid var(--gray-200);
 
-      &:hover {
-        background-color: var(--gray-50);
-        border-top-left-radius: 12px;
-        border-top-right-radius: 12px;
+        &:hover {
+          background-color: var(--gray-50);
+          border-top-left-radius: 12px;
+          border-top-right-radius: 12px;
+        }
       }
     }
 
     &:last-child {
       button {
         color: var(--red);
-      }
 
-      &:hover {
-        background-color: var(--gray-50);
-        border-bottom-left-radius: 12px;
-        border-bottom-right-radius: 12px;
+        &:hover {
+          background-color: var(--gray-50);
+          border-bottom-left-radius: 12px;
+          border-bottom-right-radius: 12px;
+        }
       }
     }
   }
