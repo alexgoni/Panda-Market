@@ -1,83 +1,42 @@
+import loadingSpinner from "assets/images/loading-spinner.svg";
 import classNames from "classnames/bind";
 import Button from "components/Button";
 import Form from "components/Form";
 import ImageUploader from "components/ImageUploader";
 import Input from "components/Input";
 import Textarea from "components/Textarea";
-import { ChangeEvent, KeyboardEvent, useState } from "react";
 
 import styles from "../Editor.module.scss";
+import useFormController from "../hooks/useFormController";
 
 const cx = classNames.bind(styles);
 
-interface FormValue {
-  image: File | null;
-  name: string;
-  description: string;
-  price: number;
-  tagList: string[];
-}
-
-// TODO: initial value
 export default function EditorForm() {
-  const [formValue, setFormValue] = useState<FormValue>({
-    image: null,
-    name: "",
-    description: "",
-    price: 0,
-    tagList: [],
-  });
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    setFormValue((prev) => ({
-      ...prev,
-      [name]: name === "price" ? Number(value) : value,
-    }));
-  };
-
-  const handleTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-
-    setFormValue((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleImageChange = (file: File | null) => {
-    const name = "image";
-
-    setFormValue((prev) => ({
-      ...prev,
-      [name]: file,
-    }));
-  };
-
-  const handleTagKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
-    const name = "tagList";
-
-    setFormValue((prev) => ({
-      ...prev,
-      [name]: [...prev.tagList, e.currentTarget.value],
-    }));
-  };
-
-  const handleTagDelete = (target: string) => {
-    const name = "tagList";
-
-    setFormValue((prev) => ({
-      ...prev,
-      [name]: prev[name].filter((tag: string) => tag !== target),
-    }));
-  };
+  const {
+    formValue,
+    mutation,
+    handleImageChange,
+    handleInputChange,
+    handleTextareaChange,
+    handleTagDelete,
+    handleTagKeyUp,
+    handleSubmit,
+    handleFormKeyDown,
+  } = useFormController();
 
   return (
-    <Form className={cx("form")}>
+    <Form
+      onSubmit={handleSubmit}
+      className={cx("form")}
+      onKeyDown={handleFormKeyDown}
+    >
       <h1 className={cx("title")}>상품 등록하기</h1>
       <Button type="submit" height="40px" className={cx("submit-btn")}>
-        등록
+        {mutation.isPending ? (
+          <span>등록</span>
+        ) : (
+          <img src={loadingSpinner} alt="loading" />
+        )}
       </Button>
 
       <label htmlFor="image">상품 이미지</label>
@@ -93,7 +52,7 @@ export default function EditorForm() {
         type="text"
         name="name"
         value={formValue.name}
-        onChange={handleChange}
+        onChange={handleInputChange}
         placeholder="상품명을 입력해주세요."
         required
       />
@@ -114,7 +73,7 @@ export default function EditorForm() {
         type="number"
         name="price"
         value={formValue.price}
-        onChange={handleChange}
+        onChange={handleInputChange}
         placeholder="판매 가격을 입력해주세요"
         required
       />
@@ -123,8 +82,8 @@ export default function EditorForm() {
       <Input
         id="tag"
         type="tag"
-        value={formValue.tagList}
-        name="tagList"
+        value={formValue.tags}
+        name="tags"
         required={false}
         onKeyUp={handleTagKeyUp}
         onDelete={handleTagDelete}
