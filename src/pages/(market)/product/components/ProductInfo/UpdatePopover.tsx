@@ -32,7 +32,7 @@ export default function UpdatePopover() {
       <Popover.Content position="right">
         <ul className={cx("popover-content")}>
           <li>
-            <button type="button" onClick={() => navigate(`/edit/${id}`)}>
+            <button type="button" onClick={() => navigate(`/edit-item/${id}`)}>
               수정하기
             </button>
           </li>

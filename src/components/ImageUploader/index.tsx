@@ -82,7 +82,6 @@ export default function ImageUploader({
             accept="image/png, image/jpeg"
             onChange={handleChange}
             ref={inputRef}
-            required={required}
           />
           <img src={plusIcon} alt="plus-icon" />
           <h1>이미지 등록</h1>

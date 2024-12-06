@@ -7,10 +7,15 @@ import Textarea from "components/Textarea";
 
 import styles from "../Editor.module.scss";
 import useFormController from "../hooks/useFormController";
+import type { FormValue } from "../type";
 
 const cx = classNames.bind(styles);
 
-export default function EditorForm() {
+interface Props {
+  initialValue?: FormValue;
+}
+
+export default function EditorForm({ initialValue }: Props) {
   const {
     formValue,
     mutation,
@@ -21,7 +26,7 @@ export default function EditorForm() {
     handleTagKeyUp,
     handleSubmit,
     handleFormKeyDown,
-  } = useFormController();
+  } = useFormController(initialValue);
 
   return (
     <Form
@@ -36,7 +41,11 @@ export default function EditorForm() {
         disabled={mutation.isPending}
         className={cx("submit-btn")}
       >
-        <span>{!mutation.isPending ? "등록" : "등록 중"}</span>
+        {!initialValue ? (
+          <span>{!mutation.isPending ? "등록" : "등록 중"}</span>
+        ) : (
+          <span>{!mutation.isPending ? "수정" : "수정 중"}</span>
+        )}
       </Button>
 
       <label htmlFor="image">상품 이미지</label>
@@ -44,6 +53,7 @@ export default function EditorForm() {
         id="image"
         name="image"
         onChange={handleImageChange}
+        defaultValue={(initialValue?.image as string | null) ?? undefined}
         required
       />
 

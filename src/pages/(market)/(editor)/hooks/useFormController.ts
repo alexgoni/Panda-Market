@@ -1,40 +1,47 @@
 import { PostProductRequest } from "@panda-market-api";
 import { useMutation } from "@tanstack/react-query";
 import { uploadImage } from "api/image";
-import { postProduct } from "api/product";
+import { postProduct, updateProduct } from "api/product";
 import { ChangeEvent, FormEvent, KeyboardEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-interface FormValue {
-  image: File | null;
-  name: string;
-  description: string;
-  price: number;
-  tags: string[];
-}
+import type { FormValue } from "../type";
 
-export default function useFormController() {
+export default function useFormController(initialValue?: FormValue) {
   const navigate = useNavigate();
-  const [formValue, setFormValue] = useState<FormValue>({
-    image: null,
-    name: "",
-    description: "",
-    price: 0,
-    tags: [],
-  });
+  const params = useParams();
+  const [formValue, setFormValue] = useState<FormValue>(
+    initialValue ?? {
+      image: null,
+      name: "",
+      description: "",
+      price: 0,
+      tags: [],
+    },
+  );
 
   const mutation = useMutation({
     mutationFn: async () => {
       if (!formValue.image) return null;
-      const imageRes = await uploadImage(formValue.image);
+
+      let imageStr;
+      if (typeof formValue.image === "string") imageStr = formValue.image;
+      else {
+        const imageRes = await uploadImage(formValue.image);
+        imageStr = imageRes.url;
+      }
+
       const body: PostProductRequest = {
-        images: [imageRes.url],
+        images: [imageStr],
         description: formValue.description,
         name: formValue.name,
         price: formValue.price,
         tags: formValue.tags,
       };
-      return postProduct(body);
+
+      return !initialValue
+        ? postProduct(body)
+        : updateProduct({ productId: Number(params.id), formValue: body });
     },
     onSuccess: () => {
       navigate("/market");
