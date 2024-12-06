@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import {
   AddItemPage,
+  EditItemPage,
   LandingPage,
   LoginPage,
   MarketPage,
@@ -23,6 +24,7 @@ export default function Router() {
           <Route path="/market" element={<MarketPage />} />
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="/add-item" element={<AddItemPage />} />
+          <Route path="/edit-item/:id" element={<EditItemPage />} />
         </Routes>
       </BrowserRouter>
     </Suspense>

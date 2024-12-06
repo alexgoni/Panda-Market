@@ -1,20 +1,21 @@
 .main-layout {
-  margin: 0 20px;
-  min-height: calc(100vh - 76px - 120px);
-
-  @media (min-width: 768px) {
-    margin: 0 24px;
-  }
+  margin-bottom: 200px;
+  margin-left: 24px;
+  margin-right: 24px;
+  min-height: calc(100vh - 76px - 120px - 200px);
 
   @media (min-width: 1000px) {
-    margin: 0 100px;
+    margin-left: 100px;
+    margin-right: 100px;
   }
 
   @media (min-width: 1200px) {
-    margin: 0 200px;
+    margin-left: 200px;
+    margin-right: 200px;
   }
 
   @media (min-width: 1600px) {
-    margin: 0 360px;
+    margin-left: 360px;
+    margin-right: 360px;
   }
 }

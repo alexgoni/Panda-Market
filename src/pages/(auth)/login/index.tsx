@@ -1,8 +1,8 @@
 import classNames from "classnames/bind";
 
-import styles from "./Auth.module.scss";
-import Information from "./components/Information";
-import LoginForm from "./components/LoginForm";
+import styles from "../Auth.module.scss";
+import Information from "../components/Information";
+import LoginForm from "../components/LoginForm";
 
 const cx = classNames.bind(styles);
 
