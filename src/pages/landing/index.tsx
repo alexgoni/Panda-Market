@@ -1,3 +1,4 @@
+import CoCursorProvider from "cocursor";
 import Footer from "components/Layout/Footer";
 import MainLayout from "components/Layout/MainLayout";
 import Navbar from "components/Layout/Navbar";
@@ -8,7 +9,7 @@ import { Section } from "./components/Section";
 
 export default function Landing() {
   return (
-    <>
+    <CoCursorProvider apiKey={process.env.REACT_APP_COCURSOR_API_KEY as string}>
       <Navbar />
       <Banner />
       <MainLayout>
@@ -18,6 +19,6 @@ export default function Landing() {
       </MainLayout>
       <BottomBanner />
       <Footer />
-    </>
+    </CoCursorProvider>
   );
 }

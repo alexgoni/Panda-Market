@@ -28,6 +28,7 @@
     "@testing-library/jest-dom": "6.1.5",
     "@testing-library/react": "15.0.6",
     "classnames": "^2.5.1",
+    "cocursor": "^0.0.6",
     "jotai": "^2.10.1",
     "msw": "2.0.3",
     "react": "^18.3.1",
